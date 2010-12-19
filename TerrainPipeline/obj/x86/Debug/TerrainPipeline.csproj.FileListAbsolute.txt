@@ -1,0 +1,15 @@
+C:\Users\Travis\Documents\CodeProjects\XTheory\TerrainPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Travis\Documents\CodeProjects\XTheory\TerrainPipeline\bin\x86\Debug\TerrainPipeline.dll
+C:\Users\Travis\Documents\CodeProjects\XTheory\TerrainPipeline\bin\x86\Debug\TerrainPipeline.pdb
+C:\Users\Travis\Documents\CodeProjects\XTheory\TerrainPipeline\obj\x86\Debug\TerrainPipeline.dll
+C:\Users\Travis\Documents\CodeProjects\XTheory\TerrainPipeline\obj\x86\Debug\TerrainPipeline.pdb
+C:\Users\Travis\Documents\CodeProjects\XTheory\XTheory_v2\TerrainPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Travis\Documents\CodeProjects\XTheory\XTheory_v2\TerrainPipeline\obj\x86\Debug\TerrainPipeline.dll
+C:\Users\Travis\Documents\CodeProjects\XTheory\XTheory_v2\TerrainPipeline\bin\x86\Debug\TerrainPipeline.dll
+C:\Users\Travis\Documents\CodeProjects\XTheory\XTheory_v2\TerrainPipeline\bin\x86\Debug\TerrainPipeline.pdb
+C:\Users\Travis\Documents\CodeProjects\XTheory\XTheory_v2\TerrainPipeline\obj\x86\Debug\TerrainPipeline.pdb
+C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\TerrainPipeline\bin\x86\Debug\TerrainPipeline.dll
+C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\TerrainPipeline\bin\x86\Debug\TerrainPipeline.pdb
+C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\TerrainPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\TerrainPipeline\obj\x86\Debug\TerrainPipeline.dll
+C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\TerrainPipeline\obj\x86\Debug\TerrainPipeline.pdb
