@@ -21,21 +21,14 @@ namespace XEngine {
 
         private DrawDelegate m_drawDelegate;
 
-        static private XEngineComponentTest m_testGame;
+        private bool m_addDebugComponents;
 
         public XEngineComponentTest() {
             this.IsMouseVisible = true;
-            this.Components.Add( new Camera( this ) );
-            this.Components.Add( new InputManager( this ) );
         }
 
-        static public XEngineComponentTest TestGame {
-            get {
-                if (m_testGame == null) {
-                    m_testGame = new XEngineComponentTest();
-                }
-                return m_testGame;
-            }
+        public XEngineComponentTest(bool addDebugComponents) : base() {
+            m_addDebugComponents = addDebugComponents;
         }
 
         public InitDelegate InitDelegate {
@@ -73,9 +66,14 @@ namespace XEngine {
             }
         }
 
-        public static void StartTest() {
-            using (XEngineComponentTest.TestGame) {
-                TestGame.Run();
+        protected override void ConfigureGameComponents() {
+            if ( this.m_addDebugComponents ) {
+                this.BindGameComponent( new Camera( this ), typeof( ICamera ) );
+                this.BindGameComponent( new InputManager( this ), typeof( IInputManager ) );
+
+                this.Components.Add( new CameraController( this ) );
+                this.Components.Add( new Origin( this ) );
+                this.Components.Add( new DebugHUD( this ) );
             }
         }
     }

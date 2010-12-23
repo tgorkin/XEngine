@@ -7,9 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace XEngine {
-    class InputManager : GameComponent {
-
-        private static InputManager m_instance;
+    class InputManager : GameComponent, IInputManager {
 
         private KeyboardState m_lastKeyboardState;
 
@@ -24,20 +22,6 @@ namespace XEngine {
         public InputManager(XEngineGame game)
             : base(game) {
 
-        }
-
-        public static InputManager Instance {
-            get {
-                if (m_instance != null) {
-                    return m_instance;
-                } else {
-                    throw new Exception("InputManager instance must be initialized before use");
-                }
-            }
-        }
-
-        public override void Initialize() {
-            m_instance = this;
         }
 
         public override void Update(GameTime gameTime) {
@@ -115,15 +99,19 @@ namespace XEngine {
 
 
         static public void TestInputManager() {
-            InputManager inputManager = new InputManager(XEngineComponentTest.TestGame);
-            XEngineComponentTest.TestGame.Components.Add(inputManager);
-            XEngineComponentTest.TestGame.UpdateDelegate =
-                delegate(GameTime gameTime) {
-                    inputManager.isKeyPressed(Keys.A);
+            XEngineComponentTest testGame = new XEngineComponentTest();
+
+            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+            InputManager inputManager = new InputManager( testGame );
+            testGame.BindGameComponent( inputManager, typeof( IInputManager ) );
+            testGame.UpdateDelegate =
+                delegate( GameTime gameTime ) {
+                    inputManager.isKeyPressed( Keys.A );
                     inputManager.isMouseLeftPressed();
                     inputManager.isMouseRightPressed();
                 };
-            XEngineComponentTest.StartTest();
+
+            testGame.Run();
         }
     }
 }

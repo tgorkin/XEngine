@@ -19,6 +19,18 @@ namespace XEngine {
             Globals.Game = this;
             Globals.Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
+        }
+
+        virtual protected void ConfigureGameComponents() { }
+
+        public void BindGameComponent(IGameComponent gameComponent, Type serviceInterface) {
+            this.BindGameComponent( gameComponent );
+            this.Services.AddService( serviceInterface, gameComponent );
+        }
+
+        public void BindGameComponent( IGameComponent gameComponent ) {
+            this.Components.Add( gameComponent );
         }
 
         /// <summary>
@@ -28,6 +40,7 @@ namespace XEngine {
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
+            ConfigureGameComponents();
             base.Initialize();
         }
 

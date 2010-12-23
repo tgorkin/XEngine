@@ -49,9 +49,11 @@ namespace XEngine {
         }
 
         public override void Draw(GameTime gameTime) {
+            ICamera camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
+
             m_basicEffect.World = Matrix.Identity;
-            m_basicEffect.View = Camera.Instance.View;
-            m_basicEffect.Projection = Camera.Instance.Projection;
+            m_basicEffect.View = camera.View;
+            m_basicEffect.Projection = camera.Projection;
 
             foreach (EffectPass pass in m_basicEffect.CurrentTechnique.Passes) {
                 pass.Apply();
@@ -65,9 +67,10 @@ namespace XEngine {
         }
 
         static public void TestOrigin() {
-            Origin origin = new Origin(XEngineComponentTest.TestGame);
-            XEngineComponentTest.TestGame.Components.Add(origin);
-            XEngineComponentTest.StartTest();
+            XEngineComponentTest testGame = new XEngineComponentTest();
+            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+            testGame.BindGameComponent( new Origin( testGame ) );
+            testGame.Run();
         }
 
     }

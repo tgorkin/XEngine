@@ -119,10 +119,12 @@ namespace XEngine {
         /// you call it.
         /// </summary>
         public override void Draw(GameTime gameTime) {
+            ICamera camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
+
             // Set BasicEffect parameters.
             m_basicEffect.World = this.getWorld();
-            m_basicEffect.View = Camera.Instance.View;
-            m_basicEffect.Projection = Camera.Instance.Projection;
+            m_basicEffect.View = camera.View;
+            m_basicEffect.Projection = camera.Projection;
             m_basicEffect.DiffuseColor = m_color.ToVector3();
             m_basicEffect.Alpha = m_color.A / 255.0f;
 
@@ -151,18 +153,21 @@ namespace XEngine {
         }
 
         static public void TestGeometricPrimitives() {
-            Cube cube = new Cube( XEngineComponentTest.TestGame, Color.Purple, 1.0f );
-            XEngineComponentTest.TestGame.Components.Add( cube );
-            Sphere sphere = new Sphere( XEngineComponentTest.TestGame, Color.Green );
+            XEngineComponentTest testGame = new XEngineComponentTest(true);
+
+            Cube cube = new Cube( testGame, Color.Purple, 1.0f );
+            testGame.BindGameComponent( cube );
+            Sphere sphere = new Sphere( testGame, Color.Green );
             sphere.position = new Vector3( 2.0f, 0, 0 );
-            XEngineComponentTest.TestGame.Components.Add( sphere );
-            Torus torus = new Torus( XEngineComponentTest.TestGame, Color.Gold );
+            testGame.BindGameComponent( sphere );
+            Torus torus = new Torus( testGame, Color.Gold );
             torus.position = new Vector3( -2.0f, 0, 0 );
-            XEngineComponentTest.TestGame.Components.Add( torus );
-            Cylinder cylinder = new Cylinder( XEngineComponentTest.TestGame, Color.Red );
+            testGame.BindGameComponent( torus );
+            Cylinder cylinder = new Cylinder( testGame, Color.Red );
             cylinder.position = new Vector3( 0, 2.0f, 0 );
-            XEngineComponentTest.TestGame.Components.Add( cylinder );
-            XEngineComponentTest.StartTest();
+            testGame.BindGameComponent( cylinder );
+            
+            testGame.Run();
         }
     }
 }

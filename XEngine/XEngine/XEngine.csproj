@@ -111,7 +111,9 @@
     <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\CameraConstants.cs" />
     <Compile Include="Camera\CameraController.cs" />
+    <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Graphics\VertexPositionNormal.cs" />
+    <Compile Include="Managers\IInputManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Primitives\Cube.cs" />
     <Compile Include="Primitives\Cylinder.cs" />

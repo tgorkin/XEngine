@@ -5,9 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace XEngine {
-    public class Camera : GameComponent {
-
-        private static Camera m_instance;
+    public class Camera : GameComponent, ICamera {
 
         private Matrix m_view;
 
@@ -23,18 +21,7 @@ namespace XEngine {
             
         }
 
-        public static Camera Instance {
-            get {
-                if (m_instance != null) {
-                    return m_instance;
-                } else {
-                    throw new Exception("Camera instance must be initialized before use");
-                }
-            }
-        }
-
         public override void Initialize () {
-            m_instance = this;
             this.Position = CameraConstants.DEFAULT_POSITION;
             this.LookAt = CameraConstants.DEFAULT_LOOK_AT;
             this.Up = CameraConstants.DEFAULT_UP;
@@ -91,9 +78,9 @@ namespace XEngine {
         }
 
         static public void TestCamera() {
-            Camera camera = new Camera(XEngineComponentTest.TestGame);
-            XEngineComponentTest.TestGame.Components.Add(camera);
-            XEngineComponentTest.StartTest();
+            XEngineComponentTest testGame = new XEngineComponentTest();
+            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+            testGame.Run();
         }
     }
 }

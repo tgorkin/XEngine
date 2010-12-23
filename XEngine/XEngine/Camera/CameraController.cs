@@ -13,17 +13,17 @@ namespace XEngine {
 
         private static readonly float CAMERA_ROTATION_SPEED = 0.1f;
 
-        Camera m_camera;
+        ICamera m_camera;
 
-        InputManager m_inputManager;
+        IInputManager m_inputManager;
 
         public CameraController(XEngineGame game)
             : base(game) {
         }
 
         public override void Initialize() {
-            m_camera = Camera.Instance;
-            m_inputManager = InputManager.Instance;
+            m_camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
+            m_inputManager = (IInputManager)Game.Services.GetService( typeof( IInputManager ) );
         }
 
         public override void Update(GameTime gameTime) {
@@ -44,16 +44,16 @@ namespace XEngine {
             Vector3 moveDirection = new Vector3();
 
             // check for input from WASD keys
-            if (InputManager.Instance.isKeyDown(Keys.A)) {
+            if ( m_inputManager.isKeyDown( Keys.A ) ) {
                 moveDirection += -1 * Vector3.Cross(m_camera.LookDirection, m_camera.Up);
             }
-            if (InputManager.Instance.isKeyDown(Keys.D)) {
+            if ( m_inputManager.isKeyDown( Keys.D ) ) {
                 moveDirection += Vector3.Cross(m_camera.LookDirection, m_camera.Up);
             }
-            if (InputManager.Instance.isKeyDown(Keys.S)) {
+            if ( m_inputManager.isKeyDown( Keys.S ) ) {
                 moveDirection += -m_camera.LookDirection;
             }
-            if (InputManager.Instance.isKeyDown(Keys.W)) {
+            if ( m_inputManager.isKeyDown( Keys.W ) ) {
                 moveDirection += m_camera.LookDirection;
             }
 
@@ -79,8 +79,8 @@ namespace XEngine {
 
         private Quaternion GetRotation() {
             Quaternion rotation = new Quaternion();
-            if (InputManager.Instance.isMouseRightDown()) {
-                Vector2 mouseMovement = InputManager.Instance.getMouseMove();
+            if ( m_inputManager.isMouseRightDown() ) {
+                Vector2 mouseMovement = m_inputManager.getMouseMove();
                 if (Math.Abs(mouseMovement.X) > 0 || Math.Abs(mouseMovement.Y) > 0) {
                     // convert mouse pixel movement to yaw/pitch in radians
                     float yaw = convertPixelsToRadians(mouseMovement.X, Game.GraphicsDevice.Viewport.Width);
@@ -102,12 +102,14 @@ namespace XEngine {
         }
 
         static public void TestCameraController() {
-            
-            XEngineComponentTest.TestGame.Components.Add( new InputManager(XEngineComponentTest.TestGame) );
-            XEngineComponentTest.TestGame.Components.Add( new CameraController(XEngineComponentTest.TestGame) );
-            XEngineComponentTest.TestGame.Components.Add( new Origin(XEngineComponentTest.TestGame) );
-            XEngineComponentTest.TestGame.Components.Add( new DebugHUD(XEngineComponentTest.TestGame) );
-            XEngineComponentTest.StartTest();
+            XEngineComponentTest testGame = new XEngineComponentTest();
+            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+            testGame.BindGameComponent( new InputManager( testGame ), typeof( IInputManager ) );
+
+            testGame.Components.Add( new CameraController( testGame ) );
+            testGame.Components.Add( new Origin( testGame ) );
+            testGame.Components.Add( new DebugHUD( testGame ) );
+            testGame.Run();
         }
     }
 }

@@ -45,7 +45,6 @@ namespace XEngine {
             for (int x = 0; x < m_xLength; x++) {
                 for (int z = 0; z < m_zLength; z++) {
                     Vector3 point = input.ReadVector3();
-                    //point.Y *= 10;
                     Vector2 texCoord = new Vector2(x, z);
                     m_verts[i++] = new VertexPositionNormalTexture(point, Vector3.Up, texCoord);
                 }
@@ -115,9 +114,11 @@ namespace XEngine {
         }
 
         public void Draw() {
+            ICamera camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
+
             m_effect.World = this.getWorld();
-            m_effect.View = Camera.Instance.View;
-            m_effect.Projection = Camera.Instance.Projection;
+            m_effect.View = camera.View;
+            m_effect.Projection = camera.Projection;
             m_effect.Texture = m_texture;
             m_effect.TextureEnabled = true;
 
@@ -135,8 +136,7 @@ namespace XEngine {
 
             graphics.DepthStencilState = DepthStencilState.Default;
             graphics.BlendState = BlendState.Opaque;
-            //graphics.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
-            //graphics.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+            graphics.SamplerStates[0] = SamplerState.AnisotropicWrap;
             //graphics.RenderState.FillMode = FillMode.WireFrame;
 
             foreach (EffectPass effectPass in m_effect.CurrentTechnique.Passes) {
@@ -150,17 +150,19 @@ namespace XEngine {
         }
 
         static public void TestTerrain() {
-            XEngineComponentTest.TestGame.Components.Add( new CameraController( XEngineComponentTest.TestGame ) );
+            XEngineComponentTest testGame = new XEngineComponentTest( true );
+
             Terrain terrain = null;
-            XEngineComponentTest.TestGame.InitDelegate = delegate {
-                   terrain = XEngineComponentTest.TestGame.Content.Load<Terrain>( "HeightMaps\\testheightmap");
-                   terrain.ScaleTerrain(5.0f, -2.0f, 0.5f);
-                   terrain.LoadTexture("grass", 10);
+            testGame.InitDelegate = delegate {
+                    terrain = testGame.Content.Load<Terrain>( "HeightMaps\\testheightmap" );
+                    terrain.ScaleTerrain(5.0f, -2.0f, 0.5f);
+                    terrain.LoadTexture("grass", 10);
+                    testGame.BindGameComponent( terrain );
                };
-            XEngineComponentTest.TestGame.DrawDelegate = delegate(GameTime gameTime) {
+            testGame.DrawDelegate = delegate( GameTime gameTime ) {
                 terrain.Draw();
             };
-            XEngineComponentTest.StartTest();
+            testGame.Run();
         }
     }
 }

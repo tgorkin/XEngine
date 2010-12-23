@@ -38,13 +38,13 @@ namespace XEngine {
             m_debugFont = Game.Content.Load<SpriteFont>("Fonts\\" + FONT_NAME);
         }
 
-        private void TraceCameraPosition() {
-            string positionString = StringUtils.Vec3ToString(Camera.Instance.Position);
+        private void TraceCameraPosition(ICamera camera) {
+            string positionString = StringUtils.Vec3ToString( camera.Position );
             m_spriteBatch.DrawString(m_debugFont, "Position: " + positionString, CAMERA_POS_TEXT_LOC, Color.White);
         }
 
-        private void TraceCameraLookAt() {
-            string lookAtString = StringUtils.Vec3ToString(Camera.Instance.LookAt);
+        private void TraceCameraLookAt(ICamera camera) {
+            string lookAtString = StringUtils.Vec3ToString( camera.LookAt );
             m_spriteBatch.DrawString(m_debugFont, "LookAt: " + lookAtString, CAMERA_LOOK_AT_TEXT_LOC, Color.White);
         }
 
@@ -60,17 +60,19 @@ namespace XEngine {
         }
 
         public override void Draw(GameTime gameTime) {
+            ICamera camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
             m_spriteBatch.Begin();
-            TraceCameraPosition();
-            TraceCameraLookAt();
+            TraceCameraPosition(camera);
+            TraceCameraLookAt(camera);
             PrintFPS(gameTime);
             m_spriteBatch.End();
         }
 
         static public void TestDebugHUD() {
-            DebugHUD debugHud = new DebugHUD(XEngineComponentTest.TestGame);
-            XEngineComponentTest.TestGame.Components.Add(debugHud);
-            XEngineComponentTest.StartTest();
+            XEngineComponentTest testGame = new XEngineComponentTest();
+            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+            testGame.Components.Add( new DebugHUD( testGame ) );
+            testGame.Run();
         }
     }
 }
