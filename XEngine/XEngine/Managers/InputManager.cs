@@ -17,7 +17,7 @@ namespace XEngine {
 
         private MouseState m_currentMouseState;
 
-        static readonly bool m_traceEnabled = true;
+        static readonly bool m_traceEnabled = false;
 
         public InputManager(XEngineGame game)
             : base(game) {

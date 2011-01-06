@@ -11,7 +11,7 @@ namespace XEngine {
 
         private static readonly float CAMERA_MOVE_SPEED = 0.01f;
 
-        private static readonly float CAMERA_ROTATION_SPEED = 0.1f;
+        private static readonly float CAMERA_ROTATION_SPEED = 1.5f;
 
         ICamera m_camera;
 
@@ -70,10 +70,10 @@ namespace XEngine {
         private void RotateCamera(GameTime gameTime) {
             Quaternion rotation = GetRotation();
             if (rotation.LengthSquared() > 0) {
-                float rotationScaleFactor = gameTime.ElapsedGameTime.Milliseconds * getRotationSpeed();
-                rotation = Quaternion.Multiply(rotation, rotationScaleFactor);
-                Vector3 newLook = Vector3.Transform(m_camera.LookDirection, rotation);
-                m_camera.LookAt = m_camera.Position + newLook;
+                rotation = Quaternion.Multiply( rotation, this.getRotationSpeed() );
+                Vector3 lookDir = m_camera.LookDirection;
+                Vector3 newLookDir = Vector3.Transform( lookDir, rotation );
+                m_camera.LookAt = m_camera.Position + newLookDir;
             }
         }
 
@@ -85,8 +85,10 @@ namespace XEngine {
                     // convert mouse pixel movement to yaw/pitch in radians
                     float yaw = convertPixelsToRadians(mouseMovement.X, Game.GraphicsDevice.Viewport.Width);
                     float pitch = convertPixelsToRadians(mouseMovement.Y, Game.GraphicsDevice.Viewport.Height);
-                    // convert to quaternion
-                    rotation = Quaternion.CreateFromYawPitchRoll(-yaw, -pitch, 0);
+
+                    Quaternion qYaw = Quaternion.CreateFromAxisAngle( m_camera.Up, -yaw );
+                    Quaternion qPitch = Quaternion.CreateFromAxisAngle( m_camera.Right, -pitch );
+                    rotation = qYaw * qPitch;
                 }
             }
             return rotation;

@@ -28,6 +28,7 @@ namespace XEngine {
         }
 
         public XEngineComponentTest(bool addDebugComponents) : base() {
+            this.IsMouseVisible = true;
             m_addDebugComponents = addDebugComponents;
         }
 

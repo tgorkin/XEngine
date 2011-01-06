@@ -9,6 +9,8 @@ namespace XEngine {
 
         Matrix View { get; }
 
+        Matrix InverseView { get; }
+
         Matrix Projection { get; }
 
         Vector3 Position { get; set; }
@@ -16,6 +18,8 @@ namespace XEngine {
         Vector3 LookAt { get; set; }
 
         Vector3 Up { get; set; }
+
+        Vector3 Right { get; }
 
         Vector3 LookDirection { get; }
     }

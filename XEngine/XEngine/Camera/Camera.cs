@@ -72,6 +72,10 @@ namespace XEngine {
             set { m_up = value; }
         }
 
+        public Vector3 Right {
+            get { return Vector3.Normalize( Vector3.Cross(LookDirection, Up) ); }
+        }
+
         public Matrix InverseView {
             // TODO: optimize this to not use Matrix.Invert, use rotation matrix transpose method instead
             get { return Matrix.Invert(this.View); }
