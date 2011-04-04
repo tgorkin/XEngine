@@ -5,20 +5,13 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace XEngine {
-
-    public class Cube : GeometricPrimitive {
-
-        private static readonly float DEFAULT_SIZE = 1.0f;
+    class Cube : GeometricPrimitive {
 
         private float m_size;
 
-        public Cube( Game game, Color color, float size )
-            : base( game, color ) {
+        public Cube(float size) 
+            : base() {
             m_size = size;
-        }
-
-        public Cube( Game game, Color color)
-            : this(game, color, DEFAULT_SIZE) {
         }
 
         override protected void GenerateGeometry() {

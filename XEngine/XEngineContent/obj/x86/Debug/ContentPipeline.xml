@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline" xmlns:Framework="Microsoft.Xna.Framework" xmlns:Processors="Microsoft.Xna.Framework.Content.Pipeline.Processors">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
       <Source>Fonts\DefaultFont.spritefont</Source>
@@ -20,6 +20,20 @@
       <Time>2010-10-12T23:56:29.4015251-07:00</Time>
     </Item>
     <Item>
+      <Source>Models\Ship.fbx</Source>
+      <Name>Models\Ship</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngine\bin\x86\Debug\Content\Models\Ship.xnb</Output>
+      <Time>2011-01-18T22:52:21.1763385-08:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\Ship_0.xml</Key>
+        <Value>2011-03-20T00:15:10.9495303-07:00</Value>
+      </Dependency>
+      <Request>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngine\bin\x86\Debug\Content\Models\ShipDiffuse_0.xnb</Request>
+    </Item>
+    <Item>
       <Source>Textures\grass.jpg</Source>
       <Name>Textures\grass</Name>
       <Importer>TextureImporter</Importer>
@@ -27,6 +41,66 @@
       <Options>None</Options>
       <Output>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngine\bin\x86\Debug\Content\Textures\grass.xnb</Output>
       <Time>2010-10-17T01:03:21.9188671-07:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\Grid.x</Source>
+      <Name>Models\Grid</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngine\bin\x86\Debug\Content\Models\Grid.xnb</Output>
+      <Time>2011-03-03T23:34:33.9491177-08:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\Grid_0.xml</Key>
+        <Value>2011-03-20T00:15:11.1815436-07:00</Value>
+      </Dependency>
+      <Request>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngine\bin\x86\Debug\Content\Models\checker_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Models\Ship.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\Ship_0.xml</Output>
+      <Time>2011-01-18T22:52:21.1763385-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\ShipDiffuse.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngine\bin\x86\Debug\Content\Models\ShipDiffuse_0.xnb</Output>
+      <Time>2011-01-18T22:52:21.2075385-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\Grid.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\Grid_0.xml</Output>
+      <Time>2011-03-03T23:34:33.9491177-08:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\checker.bmp</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngine\bin\x86\Debug\Content\Models\checker_0.xnb</Output>
+      <Time>2011-03-03T23:12:06.2582556-08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -42,7 +116,7 @@
     <Assemblies>
       <Assembly>
         <Key>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\TerrainPipeline\bin\x86\Debug\TerrainPipeline.dll</Key>
-        <Value>2010-12-19T00:15:52.3269872-08:00</Value>
+        <Value>2011-03-06T22:44:11.4436095-08:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
@@ -67,6 +141,10 @@
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
         <Value>2010-08-23T13:41:18-07:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\EntityPipeline\bin\x86\Debug\EntityPipeline.dll</Key>
+        <Value>2011-03-20T00:15:09.5074479-07:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>

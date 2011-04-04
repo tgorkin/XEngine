@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace XEngine {
-    class Terrain : PositionedObject {
+    class Terrain {
 
         private int m_xLength;
 
@@ -35,7 +35,7 @@ namespace XEngine {
 
         private Texture2D m_texture;
 
-        public Terrain(ContentReader input) : base(Globals.Game) {
+        public Terrain( ContentReader input) {
             m_xLength = input.ReadInt32();
             m_zLength = input.ReadInt32();
             m_objectMat = Matrix.Identity;
@@ -72,7 +72,7 @@ namespace XEngine {
         }
 
         public void LoadTexture(string textureName, float texSpacing) {
-            m_texture = Game.Content.Load<Texture2D>("Textures\\" + textureName);
+            m_texture = ServiceLocator.Content.Load<Texture2D>("Textures\\" + textureName);
             m_textureSpacing = texSpacing;
             for (int i = 0; i < m_verts.Length; i++) {
                 m_verts[i].TextureCoordinate /= texSpacing;
@@ -104,19 +104,21 @@ namespace XEngine {
         }
 
         private void CreateRenderData() {
-            m_vertexBuffer = new VertexBuffer(Game.GraphicsDevice, typeof(VertexPositionNormalTexture),  m_verts.Length, BufferUsage.WriteOnly);
+            GraphicsDevice graphicsDevice = ServiceLocator.Graphics;
+
+            m_vertexBuffer = new VertexBuffer( graphicsDevice, typeof( VertexPositionNormalTexture ), m_verts.Length, BufferUsage.WriteOnly );
             m_vertexBuffer.SetData(m_verts);
 
-            m_indexBuffer = new IndexBuffer(Game.GraphicsDevice, typeof(int), m_indices.Length, BufferUsage.WriteOnly);
+            m_indexBuffer = new IndexBuffer( graphicsDevice, typeof( int ), m_indices.Length, BufferUsage.WriteOnly );
             m_indexBuffer.SetData(m_indices);
 
-            m_effect = new BasicEffect( Game.GraphicsDevice );
+            m_effect = new BasicEffect( graphicsDevice );
         }
 
         public void Draw() {
-            ICamera camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
+            ICamera camera = ServiceLocator.Camera;
 
-            m_effect.World = this.getWorld();
+            m_effect.World = Matrix.Identity;
             m_effect.View = camera.View;
             m_effect.Projection = camera.Projection;
             m_effect.Texture = m_texture;
@@ -150,14 +152,14 @@ namespace XEngine {
         }
 
         static public void TestTerrain() {
-            XEngineComponentTest testGame = new XEngineComponentTest( true );
+            XEngineComponentTest testGame = new XEngineComponentTest();
 
             Terrain terrain = null;
             testGame.InitDelegate = delegate {
                     terrain = testGame.Content.Load<Terrain>( "HeightMaps\\testheightmap" );
                     terrain.ScaleTerrain(5.0f, -2.0f, 0.5f);
                     terrain.LoadTexture("grass", 10);
-                    testGame.BindGameComponent( terrain );
+                    //testGame.BindGameComponent( terrain );
                };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
                 terrain.Draw();

@@ -22,8 +22,8 @@ namespace XEngine {
         }
 
         public override void Initialize() {
-            m_camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
-            m_inputManager = (IInputManager)Game.Services.GetService( typeof( IInputManager ) );
+            m_camera = ServiceLocator.Camera;
+            m_inputManager = ServiceLocator.InputManager;
         }
 
         public override void Update(GameTime gameTime) {
@@ -103,14 +103,24 @@ namespace XEngine {
             return CAMERA_ROTATION_SPEED;
         }
 
-        static public void TestCameraController() {
-            XEngineComponentTest testGame = new XEngineComponentTest();
-            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
-            testGame.BindGameComponent( new InputManager( testGame ), typeof( IInputManager ) );
+        static public void ComponentTest() {
+            XEngineComponentTest testGame = new XEngineComponentTest( false );
+
+            // Initialize Camera
+            Camera camera = new Camera( testGame );
+            testGame.Components.Add( camera );
+            ServiceLocator.Camera = camera;
+
+            // Initialize InputManager
+            InputManager inputManager = new InputManager( testGame );
+            testGame.Components.Add( inputManager );
+            ServiceLocator.InputManager = inputManager;
+
+            // Initialize DebugHUD
+            testGame.Components.Add( new DebugHUD( testGame ) );
 
             testGame.Components.Add( new CameraController( testGame ) );
-            testGame.Components.Add( new Origin( testGame ) );
-            testGame.Components.Add( new DebugHUD( testGame ) );
+
             testGame.Run();
         }
     }

@@ -112,24 +112,30 @@
     <Compile Include="Camera\CameraConstants.cs" />
     <Compile Include="Camera\CameraController.cs" />
     <Compile Include="Camera\ICamera.cs" />
+    <Compile Include="Entity\Attributes\AttributeConstants.cs" />
+    <Compile Include="Entity\Attributes\BaseAttribute.cs" />
+    <Compile Include="Entity\Components\BaseComponent.cs" />
+    <Compile Include="Entity\Components\OrbitComponent.cs" />
+    <Compile Include="Entity\Components\PrimitiveRenderComponent.cs" />
+    <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Entity\IEntityAttribute.cs" />
+    <Compile Include="Entity\IEntityComponent.cs" />
+    <Compile Include="Entity\Components\MoveComponent.cs" />
+    <Compile Include="Entity\Attributes\PositionAttribute.cs" />
+    <Compile Include="Entity\Components\ModelRenderComponent.cs" />
+    <Compile Include="Graphics\Cube.cs" />
+    <Compile Include="Graphics\GeometricPrimitive.cs" />
+    <Compile Include="Graphics\Sphere.cs" />
     <Compile Include="Graphics\VertexPositionNormal.cs" />
     <Compile Include="Managers\IInputManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
-    <Compile Include="Primitives\Cube.cs" />
-    <Compile Include="Primitives\Cylinder.cs" />
-    <Compile Include="Primitives\GeometricPrimitive.cs" />
-    <Compile Include="Primitives\Origin.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="Entity\PositionedObject.cs" />
-    <Compile Include="Primitives\Sphere.cs" />
-    <Compile Include="Primitives\Torus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ServiceLocator.cs" />
     <Compile Include="Terrain\Terrain.cs" />
     <Compile Include="Terrain\TerrainReader.cs" />
     <Compile Include="Testing\DebugHUD.cs" />
     <Compile Include="Testing\XEngineComponentTest.cs" />
-    <Compile Include="Testing\XEngineTest.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\VertexUtils.cs" />
     <Compile Include="XEngineGame.cs" />
@@ -139,6 +145,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\EntityPipeline\EntityPipeline.csproj">
+      <Project>{7CD87882-E19C-4834-83A1-BFDF5875F90B}</Project>
+      <Name>EntityPipeline</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TerrainPipeline\TerrainPipeline.csproj">
       <Project>{B62736C6-A95D-4DC4-963C-180E65CD3356}</Project>
       <Name>TerrainPipeline</Name>

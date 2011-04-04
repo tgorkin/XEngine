@@ -3,22 +3,22 @@ using System;
 namespace XEngine {
 #if WINDOWS || XBOX
     static class Program {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+
         static void Main(string[] args) {
 
             //XEngineGame.RunGame();
-            //Camera.TestCamera();
-            //Origin.TestOrigin();
-            //DebugHUD.TestDebugHUD();
+            //Camera.ComponentTest();
+            //DebugHUD.ComponentTest();
 
-            //InputManager.TestInputManager();
-            //CameraController.TestCameraController();
+            //InputManager.ComponentTest();
+            //CameraController.ComponentTest();
 
-            //GeometricPrimitive.TestGeometricPrimitives();
-            Terrain.TestTerrain();
-            //XEngineTest.StartTest();
+            //Terrain.TestTerrain();
+
+            ModelRenderComponent.ComponentTest();
+            //MoveComponent.ComponentTest();
+            //OrbitComponent.ComponentTest();
+            //PrimitiveRenderComponent.ComponentTest();
         }
     }
 #endif

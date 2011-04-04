@@ -15,11 +15,12 @@ namespace XEngine {
     /// </summary>
     public class XEngineGame : Microsoft.Xna.Framework.Game {
 
+        private GraphicsDeviceManager m_graphics;
+
         public XEngineGame() {
-            Globals.Game = this;
-            Globals.Graphics = new GraphicsDeviceManager(this);
+            m_graphics = new GraphicsDeviceManager( this );
             Content.RootDirectory = "Content";
-            
+            ServiceLocator.Initialize( this );
         }
 
         virtual protected void ConfigureGameComponents() { }
@@ -40,7 +41,7 @@ namespace XEngine {
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            ConfigureGameComponents();
+            ServiceLocator.Graphics = this.GraphicsDevice;
             base.Initialize();
         }
 

@@ -21,7 +21,7 @@ namespace TerrainPipeline {
     /// TODO: change the ContentImporter attribute to specify the correct file
     /// extension, display name, and default processor for this importer.
     /// </summary>
-    [ContentImporter(".jpg",".bmp", DisplayName = "Terrain Importer", DefaultProcessor = "TerrainProcessor")]
+    [ContentImporter(".jpg", DisplayName = "Terrain Importer", DefaultProcessor = "TerrainProcessor")]
     public class TerrainImporter : ContentImporter<TerrainContent> {
 
         public override TerrainContent Import(string filename, ContentImporterContext context) {

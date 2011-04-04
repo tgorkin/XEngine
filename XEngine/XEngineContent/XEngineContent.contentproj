@@ -56,18 +56,38 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TerrainPipeline\TerrainPipeline.csproj">
-      <Project>{B62736C6-A95D-4DC4-963C-180E65CD3356}</Project>
-      <Name>TerrainPipeline</Name>
-    </ProjectReference>
+    <Compile Include="Models\Ship.fbx">
+      <Name>Ship</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="Textures\grass.jpg">
       <Name>grass</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Grid.x">
+      <Name>Grid</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\EntityPipeline\EntityPipeline.csproj">
+      <Project>{7CD87882-E19C-4834-83A1-BFDF5875F90B}</Project>
+      <Name>EntityPipeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TerrainPipeline\TerrainPipeline.csproj">
+      <Project>{B62736C6-A95D-4DC4-963C-180E65CD3356}</Project>
+      <Name>TerrainPipeline</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

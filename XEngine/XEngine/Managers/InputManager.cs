@@ -17,11 +17,15 @@ namespace XEngine {
 
         private MouseState m_currentMouseState;
 
-        static readonly bool m_traceEnabled = false;
+        private bool m_traceEnabled = false;
 
         public InputManager(XEngineGame game)
             : base(game) {
 
+        }
+
+        public bool traceEnabled {
+            set { m_traceEnabled = value; }
         }
 
         public override void Update(GameTime gameTime) {
@@ -98,17 +102,25 @@ namespace XEngine {
         }
 
 
-        static public void TestInputManager() {
-            XEngineComponentTest testGame = new XEngineComponentTest();
+        static public void ComponentTest() {
+            XEngineComponentTest testGame = new XEngineComponentTest( false );
 
-            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+            // Initialize Camera
+            Camera camera = new Camera( testGame );
+            testGame.Components.Add( camera );
+            ServiceLocator.Camera = camera;
+
+            // Initialize InputManager
             InputManager inputManager = new InputManager( testGame );
-            testGame.BindGameComponent( inputManager, typeof( IInputManager ) );
+            inputManager.traceEnabled = true;
+            testGame.Components.Add( inputManager );
+
             testGame.UpdateDelegate =
                 delegate( GameTime gameTime ) {
                     inputManager.isKeyPressed( Keys.A );
                     inputManager.isMouseLeftPressed();
-                    inputManager.isMouseRightPressed();
+                    inputManager.isMouseRightDown();
+                    inputManager.isKeyDown( Keys.Space );
                 };
 
             testGame.Run();

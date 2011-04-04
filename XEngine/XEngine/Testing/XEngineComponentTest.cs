@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace XEngine {
 
@@ -21,15 +22,15 @@ namespace XEngine {
 
         private DrawDelegate m_drawDelegate;
 
-        private bool m_addDebugComponents;
+        private bool m_setupDefaultComponents = true;
 
-        public XEngineComponentTest() {
+        public XEngineComponentTest() : base() {
             this.IsMouseVisible = true;
         }
 
-        public XEngineComponentTest(bool addDebugComponents) : base() {
-            this.IsMouseVisible = true;
-            m_addDebugComponents = addDebugComponents;
+        public XEngineComponentTest(bool setupDefaultComponents)
+            : this() {
+           m_setupDefaultComponents = setupDefaultComponents;
         }
 
         public InitDelegate InitDelegate {
@@ -45,6 +46,26 @@ namespace XEngine {
         }
 
         protected override void Initialize() {
+            if ( m_setupDefaultComponents ) {
+
+                // Initialize Camera
+                Camera camera = new Camera( this );
+                this.Components.Add( camera );
+                ServiceLocator.Camera = camera;
+
+                // Initialize InputManager
+                InputManager inputManager = new InputManager( this );
+                this.Components.Add( inputManager );
+                ServiceLocator.InputManager = inputManager;
+
+                // Initialize CameraController
+                this.Components.Add( new CameraController( this ) );
+
+                // Initialize DebugHUD
+                this.Components.Add( new DebugHUD( this ) );
+
+            }
+
             base.Initialize();
 
             if (m_initDelegate != null) {
@@ -64,17 +85,6 @@ namespace XEngine {
             base.Draw(gameTime);
             if (m_drawDelegate != null) {
                 m_drawDelegate(gameTime);
-            }
-        }
-
-        protected override void ConfigureGameComponents() {
-            if ( this.m_addDebugComponents ) {
-                this.BindGameComponent( new Camera( this ), typeof( ICamera ) );
-                this.BindGameComponent( new InputManager( this ), typeof( IInputManager ) );
-
-                this.Components.Add( new CameraController( this ) );
-                this.Components.Add( new Origin( this ) );
-                this.Components.Add( new DebugHUD( this ) );
             }
         }
     }

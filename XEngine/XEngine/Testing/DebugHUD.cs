@@ -60,7 +60,7 @@ namespace XEngine {
         }
 
         public override void Draw(GameTime gameTime) {
-            ICamera camera = (ICamera)Game.Services.GetService( typeof( ICamera ) );
+            ICamera camera = ServiceLocator.Camera;
             m_spriteBatch.Begin();
             TraceCameraPosition(camera);
             TraceCameraLookAt(camera);
@@ -68,10 +68,16 @@ namespace XEngine {
             m_spriteBatch.End();
         }
 
-        static public void TestDebugHUD() {
-            XEngineComponentTest testGame = new XEngineComponentTest();
-            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+        static public void ComponentTest() {
+            XEngineComponentTest testGame = new XEngineComponentTest(false);
+
+            // Init Camera
+            Camera camera = new Camera( testGame );
+            testGame.Components.Add( camera );
+            ServiceLocator.Camera = camera;
+
             testGame.Components.Add( new DebugHUD( testGame ) );
+
             testGame.Run();
         }
     }

@@ -81,9 +81,12 @@ namespace XEngine {
             get { return Matrix.Invert(this.View); }
         }
 
-        static public void TestCamera() {
-            XEngineComponentTest testGame = new XEngineComponentTest();
-            testGame.BindGameComponent( new Camera( testGame ), typeof( ICamera ) );
+        static public void ComponentTest() {
+            XEngineComponentTest testGame = new XEngineComponentTest(false);
+
+            Camera camera = new Camera( testGame );
+            testGame.Components.Add( camera );
+
             testGame.Run();
         }
     }
