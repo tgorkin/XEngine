@@ -1,5 +1,0 @@
-C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\EntityPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\EntityPipeline\bin\x86\Debug\EntityPipeline.dll
-C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\EntityPipeline\bin\x86\Debug\EntityPipeline.pdb
-C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\EntityPipeline\obj\x86\Debug\EntityPipeline.dll
-C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\EntityPipeline\obj\x86\Debug\EntityPipeline.pdb

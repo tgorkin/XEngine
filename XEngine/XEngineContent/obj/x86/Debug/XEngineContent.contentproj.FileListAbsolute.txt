@@ -1,2 +1,0 @@
-C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine\XEngine\XEngineContent\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Travis\Documents\CodeProjects\XTheory\XEngine_v1\XEngine\XEngineContent\obj\x86\Debug\ResolveAssemblyReference.cache
