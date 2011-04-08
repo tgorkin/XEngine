@@ -118,6 +118,7 @@
     <Compile Include="Entity\Components\OrbitComponent.cs" />
     <Compile Include="Entity\Components\PrimitiveRenderComponent.cs" />
     <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Entity\EntityFactory.cs" />
     <Compile Include="Entity\IEntityAttribute.cs" />
     <Compile Include="Entity\IEntityComponent.cs" />
     <Compile Include="Entity\Components\MoveComponent.cs" />

@@ -15,10 +15,14 @@ namespace XEngine {
 
             //Terrain.TestTerrain();
 
-            ModelRenderComponent.ComponentTest();
+            //ModelRenderComponent.ComponentTest();
             //MoveComponent.ComponentTest();
             //OrbitComponent.ComponentTest();
             //PrimitiveRenderComponent.ComponentTest();
+
+            //EntityFactory.ComponentTest();
+            //EntityPipeline.EntityData.SerializeTest();
+            ModelRenderComponent.SerializeTest();
         }
     }
 #endif

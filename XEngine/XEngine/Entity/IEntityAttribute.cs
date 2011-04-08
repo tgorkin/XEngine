@@ -6,5 +6,6 @@ using System.Text;
 namespace XEngine {
     interface IEntityAttribute {
 
+        //void Load( Dictionary<string, object> data );
     }
 }

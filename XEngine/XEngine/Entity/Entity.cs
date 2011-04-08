@@ -12,6 +12,11 @@ namespace XEngine {
 
         private Dictionary<string, IEntityAttribute> m_attributes = new Dictionary<string, IEntityAttribute>();
 
+        public List<IEntityComponent> Components {
+            get { return m_components; }
+            set { m_components = value; }
+        }
+
         public void AddComponent( IEntityComponent newComponent ) {
             m_components.Add( newComponent );
         }

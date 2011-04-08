@@ -88,5 +88,20 @@ namespace XEngine {
             entity.AddComponent( renderComponent );
         }
 
+        static public void SerializeTest() {
+            XEngineComponentTest testGame = new XEngineComponentTest();
+
+            Entity entity = null;
+            testGame.InitDelegate = delegate {
+                entity = new Entity();
+                AddShipTestComponent( entity );
+                AddGridTestComponent( entity );
+                EntityPipeline.EntityData.SaveToXml( entity );
+            };
+            testGame.Run();
+
+            
+        }
+
     }
 }

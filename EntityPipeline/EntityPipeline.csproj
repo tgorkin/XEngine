@@ -50,7 +50,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttributeData.cs" />
     <Compile Include="EntityData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

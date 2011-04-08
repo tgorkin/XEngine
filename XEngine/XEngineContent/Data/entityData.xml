@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="EntityPipeline.EntityData">
+    <Name>TestEntity1</Name>
+    <AttributeData>
+      <Item>
+        <Key>PositionAttribute</Key>
+        <Value Type="Microsoft.Xna.Framework.Vector3">0.0 0.5 10.7</Value>
+      </Item>
+    </AttributeData>
+  </Asset>
+</XnaContent>

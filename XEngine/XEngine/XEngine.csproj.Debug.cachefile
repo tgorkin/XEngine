@@ -3,5 +3,6 @@ Content\HeightMaps\testheightmap.xnb
 Content\Models\Ship.xnb
 Content\Textures\grass.xnb
 Content\Models\Grid.xnb
+Content\Data\entityData.xnb
 Content\Models\ShipDiffuse_0.xnb
 Content\Models\checker_0.xnb
