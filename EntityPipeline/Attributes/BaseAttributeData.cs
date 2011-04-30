@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace XEngine {
-    interface IEntityAttribute {
+namespace EntityPipeline {
+    public class BaseAttributeData {
 
-        void LoadData( object data );
+        public object DataValue;
     }
 }

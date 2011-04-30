@@ -12,5 +12,9 @@ namespace XEngine {
             get { return m_data; }
             set { m_data = value; }
         }
+
+        public void LoadData( object data ) {
+
+        }
     }
 }

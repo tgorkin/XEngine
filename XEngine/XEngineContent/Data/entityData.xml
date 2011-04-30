@@ -4,9 +4,25 @@
     <Name>TestEntity1</Name>
     <AttributeData>
       <Item>
-        <Key>PositionAttribute</Key>
-        <Value Type="Microsoft.Xna.Framework.Vector3">0.0 0.5 10.7</Value>
+        <Key>Position</Key>
+        <Value Type="EntityPipeline.PositionAttributeData">
+          <Position>0 0.5 10.7</Position>
+        </Value>
+      </Item>
+      <Item>
+        <Key>Velocity</Key>
+        <Value Type="EntityPipeline.BaseAttributeData">
+          <DataValue Type="float">4.3</DataValue>
+        </Value>
       </Item>
     </AttributeData>
+    <ComponentData>
+      <Item>
+        <Key>ModelRenderComponent</Key>
+        <Value Type="EntityPipeline.ModelRenderComponentData">
+          <Model>Models/Ship</Model>
+        </Value>
+      </Item>
+    </ComponentData>
   </Asset>
 </XnaContent>

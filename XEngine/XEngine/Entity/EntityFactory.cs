@@ -10,9 +10,25 @@ namespace XEngine {
             // iterate through all the attributes
             foreach ( KeyValuePair<string, object> pair in entityData.AttributeData ) {
                 // get the type of attribute to construct
-                Type attributeType = Type.GetType( "XEngine." + pair.Key );
+                Type buildTimeDataType = pair.Value.GetType();
+                string buildTimeDataTypeString = buildTimeDataType.ToString();
+                string[] splitString = buildTimeDataTypeString.Split('.');
+                buildTimeDataTypeString = splitString[splitString.Length - 1];
+                int splitIndex = buildTimeDataTypeString.LastIndexOf( "Data" );
+                string runTimeDataTypeString = buildTimeDataTypeString.Substring( 0, splitIndex );
+                
+                //Type attributeType = Type.GetType( "XEngine." + pair.Key );
+
+                Type attributeType = null;
+                if ( runTimeDataTypeString == "BaseAttribute" ) {
+                    Type dataType = (pair.Value as BaseAttributeData).DataValue.GetType();
+                    attributeType = Type.GetType( "XEngine." + runTimeDataTypeString + "`1" ).MakeGenericType( dataType );
+                } else {
+                    attributeType = Type.GetType( "XEngine." + runTimeDataTypeString );
+                }
                 IEntityAttribute attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeType ) );
-                //attribute.Load( pair.Value );
+                attribute.LoadData( pair.Value );
+                entity.addAttribute( pair.Key, attribute );
             }
             return entity;
         }

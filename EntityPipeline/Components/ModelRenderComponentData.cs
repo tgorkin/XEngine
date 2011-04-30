@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace XEngine {
-    interface IEntityAttribute {
+namespace EntityPipeline {
+    class ModelRenderComponentData {
 
-        void LoadData( object data );
+        public string Model;
     }
 }
