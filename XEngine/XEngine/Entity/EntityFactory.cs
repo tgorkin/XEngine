@@ -1,47 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
 using EntityPipeline;
+using Microsoft.Xna.Framework;
 
 namespace XEngine {
     class EntityFactory {
 
-        public Entity BuildEntity(EntityData entityData) {
-            Entity entity = new Entity();
-            // iterate through all the attributes
-            foreach ( KeyValuePair<string, object> pair in entityData.AttributeData ) {
-                // get the type of attribute to construct
-                Type buildTimeDataType = pair.Value.GetType();
-                string buildTimeDataTypeString = buildTimeDataType.ToString();
-                string[] splitString = buildTimeDataTypeString.Split('.');
-                buildTimeDataTypeString = splitString[splitString.Length - 1];
-                int splitIndex = buildTimeDataTypeString.LastIndexOf( "Data" );
-                string runTimeDataTypeString = buildTimeDataTypeString.Substring( 0, splitIndex );
-                
-                //Type attributeType = Type.GetType( "XEngine." + pair.Key );
+        private EntityDictionary m_entityDictionary = new EntityDictionary();
 
-                Type attributeType = null;
-                if ( runTimeDataTypeString == "BaseAttribute" ) {
-                    Type dataType = (pair.Value as BaseAttributeData).DataValue.GetType();
-                    attributeType = Type.GetType( "XEngine." + runTimeDataTypeString + "`1" ).MakeGenericType( dataType );
-                } else {
-                    attributeType = Type.GetType( "XEngine." + runTimeDataTypeString );
-                }
-                IEntityAttribute attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeType ) );
-                attribute.LoadData( pair.Value );
-                entity.addAttribute( pair.Key, attribute );
-            }
-            return entity;
+        public void LoadEntityTemplates(string entityTemplateAssetPath) {
+            EntityDictionary loadedDictionary = ServiceLocator.Content.Load<EntityDictionary>( entityTemplateAssetPath );
+            m_entityDictionary.Merge( loadedDictionary );
         }
 
-        static public void ComponentTest() {
+        public Entity CreateEntity( string entityTemplateName ) {
+            Entity newEntity = new Entity();
+            if ( m_entityDictionary.ContainsKey( entityTemplateName ) ) {
+                EntityTemplate entityTemplate = m_entityDictionary[entityTemplateName];
+                // create and load data for all entity attributes
+                foreach ( KeyValuePair<string, object> attributeData in entityTemplate.Attributes ) {
+                    IEntityAttribute attribute = null;
+                    if ( attributeData.Key == Attributes.TRANSFORM ) {
+                        attribute = new TransformAttribute( attributeData.Value as TransformData );
+                    } else {
+                        Type attributeDataType = Type.GetType( "XEngine.EntityAttribute`1" ).MakeGenericType( attributeData.Value.GetType() );
+                        attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeDataType, attributeData.Value ) );
+                    }
+                    newEntity.AddAttribute( attributeData.Key, attribute );
+                }
+                // create and load data for all entity components
+                foreach ( KeyValuePair<string, ComponentTemplate> componentTemplate in entityTemplate.Components ) {
+                    Type componentDataType = Type.GetType( "XEngine." + componentTemplate.Key );
+                    IEntityComponent component = (IEntityComponent)( System.Activator.CreateInstance( componentDataType, newEntity ) );
+                    if ( componentTemplate.Value != null ) {
+                        component.LoadFromTemplate( componentTemplate.Value );
+                    }
+                    newEntity.AddComponent( component );
+                }
+            }
+            return newEntity;
+        }
+
+        static public void LoadEntityDataTest() {
             XEngineComponentTest testGame = new XEngineComponentTest();
 
-            EntityData entityData;
             testGame.InitDelegate = delegate {
-                entityData = ServiceLocator.Content.Load<EntityData>( "Data/entityData" );
-                EntityFactory factory = new EntityFactory();
-                Entity entity = factory.BuildEntity( entityData );
-                System.Diagnostics.Trace.Write( entityData );
+                EntityTemplate entityTemplate = ServiceLocator.Content.Load<EntityTemplate>( "Data/EntityTest" );
+                System.Diagnostics.Debugger.Break();
+            };
+            testGame.Run();
+        }
+
+        static public void LoadEntityListTest() {
+            XEngineComponentTest testGame = new XEngineComponentTest();
+
+            testGame.InitDelegate = delegate {
+                EntityDictionary entityDictionary = ServiceLocator.Content.Load<EntityDictionary>( "Data/EntityTemplates" );
+                System.Diagnostics.Debugger.Break();
+            };
+            testGame.Run();
+        }
+
+        static public void CreateEntityTest() {
+            XEngineComponentTest testGame = new XEngineComponentTest();
+
+            EntityFactory entityFactory = new EntityFactory();
+            Entity entity = null;
+            testGame.InitDelegate = delegate {
+                entityFactory.LoadEntityTemplates( "Data/EntityTemplates" );
+                entity = entityFactory.CreateEntity( "Ship" );
+                entity.Initialize();
+            };
+            testGame.UpdateDelegate = delegate( GameTime gameTime ) {
+                entity.Update( gameTime );
+            };
+            testGame.DrawDelegate = delegate( GameTime gameTime ) {
+                entity.Draw( gameTime );
             };
             testGame.Run();
         }

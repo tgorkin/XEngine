@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using EntityPipeline;
 
 namespace XEngine {
     class BaseComponent : IEntityComponent {
@@ -16,6 +17,10 @@ namespace XEngine {
         public BaseComponent( Entity entity ) {
             this.m_entity = entity;
         }
+
+        virtual public void LoadFromTemplate(ComponentTemplate componentTemplate) { }
+
+        virtual public void Initialize() { }
 
         virtual public void Update( GameTime gameTime ) {}
 

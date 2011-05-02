@@ -21,7 +21,7 @@ namespace XEngine {
             m_components.Add( newComponent );
         }
 
-        public IEntityAttribute getAttribute( string attributeName ) {
+        public IEntityAttribute GetAttribute( string attributeName ) {
             IEntityAttribute result = null;
             if ( m_attributes.ContainsKey( attributeName ) ) {
                 result = m_attributes[attributeName];
@@ -29,12 +29,14 @@ namespace XEngine {
             return result;
         }
 
-        public void addAttribute( string attributeName, IEntityAttribute attribute ) {
+        public void AddAttribute( string attributeName, IEntityAttribute attribute ) {
             m_attributes[attributeName] = attribute;
         }
 
         public void Initialize( ) {
-
+            foreach ( IEntityComponent component in m_components ) {
+                component.Initialize();
+            }
         }
 
         public void Update( GameTime gameTime ) {

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent xmlns:Framework="Microsoft.Xna.Framework" 
+            xmlns:Graphics="Microsoft.Xna.Framework.Graphics">
+  <Asset Type="EntityPipeline.EntityTemplate">
+    <Attribute>
+      <Key>Position</Key>
+      <Value Type="Framework:Vector3">0 0.5 10.7</Value>
+    </Attribute>
+    <Attribute>
+      <Key>Velocity</Key>
+      <Value Type="float">4.3</Value>
+    </Attribute>
+    <Component>
+      <Key>ModelRenderComponent</Key>
+      <Value>
+        <ComponentData>
+          <Key>Model</Key>
+          <Value Type="string">Models/Ship</Value>
+        </ComponentData>
+      </Value>
+    </Component>
+  </Asset>
+</XnaContent>

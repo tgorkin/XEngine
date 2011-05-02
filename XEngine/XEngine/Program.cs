@@ -20,9 +20,9 @@ namespace XEngine {
             //OrbitComponent.ComponentTest();
             //PrimitiveRenderComponent.ComponentTest();
 
-            EntityFactory.ComponentTest();
-            //EntityPipeline.EntityData.SerializeTest();
-            //ModelRenderComponent.SerializeTest();
+            //EntityFactory.LoadEntityDataTest();
+            //EntityFactory.LoadEntityListTest();
+            EntityFactory.CreateEntityTest();
         }
     }
 #endif

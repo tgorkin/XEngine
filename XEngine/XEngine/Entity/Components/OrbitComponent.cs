@@ -3,29 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using EntityPipeline;
 
 namespace XEngine {
     class OrbitComponent : BaseComponent {
 
-        private PositionAttribute m_position;
+        private static readonly string COMPONENT_DATA_RADIUS = "Radius";
+
+        private static readonly string COMPONENT_DATA_PERIOD = "Period";
+
+        private TransformAttribute m_transform;
 
         public float Radius { get; set; }
 
-        public float CycleTime { get; set; }
+        public float Period { get; set; }
 
-        public OrbitComponent( Entity entity )
-            : base( entity ) {
-            m_position = entity.getAttribute( Attributes.POSITION ) as PositionAttribute;
+        public OrbitComponent( Entity entity ) : base( entity ) { }
+
+        override public void Initialize() {
+            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as TransformAttribute;
         }
 
         override public void Update( GameTime gameTime ) {
-            Vector3 origPostion = m_position.Position;
-            float cycleProgress = (float)gameTime.TotalGameTime.TotalMilliseconds / CycleTime;
+            Vector3 origPostion = m_transform.Position;
+            float cycleProgress = (float)gameTime.TotalGameTime.TotalMilliseconds / Period;
 
             origPostion.X = (float)Math.Cos( cycleProgress ) * Radius;
             origPostion.Y = (float)Math.Sin( cycleProgress ) * Radius;
 
-            m_position.Position = origPostion;
+            m_transform.Position = origPostion;
+        }
+
+        override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {
+            if ( componentTemplate.ComponentData.ContainsKey( COMPONENT_DATA_RADIUS ) ) {
+                this.Radius = (float)componentTemplate.ComponentData[COMPONENT_DATA_RADIUS];
+            }
+            if ( componentTemplate.ComponentData.ContainsKey( COMPONENT_DATA_PERIOD ) ) {
+                this.Period = (float)componentTemplate.ComponentData[COMPONENT_DATA_PERIOD];
+            }
         }
 
         static public void ComponentTest() {
@@ -36,6 +51,7 @@ namespace XEngine {
                 entity = new Entity();
                 ModelRenderComponent.AddShipTestComponent( entity );
                 AddTestComponent( entity );
+                entity.Initialize();
             };
             testGame.UpdateDelegate = delegate( GameTime gameTime ) {
                 entity.Update( gameTime );
@@ -49,7 +65,7 @@ namespace XEngine {
         static public void AddTestComponent( Entity entity ) {
             OrbitComponent orbitComponent = new OrbitComponent( entity );
             orbitComponent.Radius = 10f;
-            orbitComponent.CycleTime = 2000f;
+            orbitComponent.Period = 2000f;
             entity.AddComponent( orbitComponent );
         }
 

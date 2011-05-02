@@ -6,8 +6,8 @@ using System.Text;
 namespace XEngine {
     class Attributes {
 
-        public static readonly string POSITION = "position";
+        public static readonly string TRANSFORM = "Transform";
 
-        public static readonly string VELOCITY = "velocity";
+        public static readonly string VELOCITY = "Velocity";
     }
 }

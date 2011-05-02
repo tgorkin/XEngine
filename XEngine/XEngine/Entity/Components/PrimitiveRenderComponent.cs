@@ -8,9 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 namespace XEngine {
     class PrimitiveRenderComponent : BaseComponent {
 
+        private GeometricPrimitveType m_primitiveType;
+
         private Color m_color;
 
-        private PositionAttribute m_position;
+        private bool m_wireframe;
+
+        private TransformAttribute m_transform;
 
         private GeometricPrimitive m_primitive;
 
@@ -28,12 +32,8 @@ namespace XEngine {
 
         public PrimitiveRenderComponent( Entity entity, GeometricPrimitveType type, Color color )
             : base( entity ) {
-            m_primitive = GeometricPrimitive.Factory( type );
-            InitializeBuffers();
+            m_primitiveType = type;
             m_color = color;
-            m_position = entity.getAttribute( Attributes.POSITION ) as PositionAttribute;
-            m_basicEffect = new BasicEffect( ServiceLocator.Graphics );
-            m_rasterizerState = new RasterizerState();
         }
 
         ~PrimitiveRenderComponent() {
@@ -56,7 +56,14 @@ namespace XEngine {
 
         public bool Wireframe {
             set {
-                if ( value ) {
+                m_wireframe = value;
+                ToggleWireframe( m_wireframe );
+            }
+        }
+
+        private void ToggleWireframe(bool wireframeOn) {
+            if ( m_rasterizerState != null ) {
+                if ( wireframeOn ) {
                     m_rasterizerState.FillMode = FillMode.WireFrame;
                     m_rasterizerState.CullMode = CullMode.None;
                 } else {
@@ -65,11 +72,20 @@ namespace XEngine {
             }
         }
 
+        override public void Initialize() {
+            m_primitive = GeometricPrimitive.Factory( this.m_primitiveType );
+            InitializeBuffers();
+            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as TransformAttribute;
+            m_basicEffect = new BasicEffect( ServiceLocator.Graphics );
+            m_rasterizerState = new RasterizerState();
+            ToggleWireframe( m_wireframe );
+        }
+
         override public void Draw( GameTime gameTime ) {
             ICamera camera = ServiceLocator.Camera;
 
             // Set BasicEffect parameters.
-            m_basicEffect.World = m_position.World;
+            m_basicEffect.World = m_transform.World;
             m_basicEffect.View = camera.View;
             m_basicEffect.Projection = camera.Projection;
             m_basicEffect.DiffuseColor = m_color.ToVector3();
@@ -125,21 +141,27 @@ namespace XEngine {
         static public void ComponentTest() {
             XEngineComponentTest testGame = new XEngineComponentTest();
 
-            Entity entity = null;
+            Entity entity1 = null;
+            Entity entity2 = null;
             testGame.InitDelegate = delegate {
-                entity = new Entity();
-                AddSphereTestComponent( entity );
-                AddCubeTestComponent( entity );
+                entity1 = new Entity();
+                AddSphereTestComponent( entity1 );
+                entity1.Initialize();
+
+                entity2 = new Entity();
+                AddCubeTestComponent( entity2 );
+                entity2.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
-                entity.Draw( gameTime );
+                entity1.Draw( gameTime );
+                entity2.Draw( gameTime );
             };
             testGame.Run();
         }
 
         static public void AddSphereTestComponent( Entity entity ) {
-            PositionAttribute position = new PositionAttribute();
-            entity.addAttribute( Attributes.POSITION, position );
+            TransformAttribute transform = new TransformAttribute();
+            entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity, GeometricPrimitveType.Sphere, Color.Green );
             renderComponent.Wireframe = false;
@@ -147,9 +169,9 @@ namespace XEngine {
         }
 
         static public void AddCubeTestComponent( Entity entity ) {
-            PositionAttribute position = new PositionAttribute();
-            position.Position = new Vector3( 1.0f, 0, 0 );
-            entity.addAttribute( Attributes.POSITION, position );
+            TransformAttribute transform = new TransformAttribute();
+            transform.Position = new Vector3( 1.0f, 0, 0 );
+            entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity, GeometricPrimitveType.Cube, Color.LightBlue );
             renderComponent.Wireframe = true;

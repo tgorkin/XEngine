@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent xmlns:Framework="Microsoft.Xna.Framework"
+            xmlns:Graphics="Microsoft.Xna.Framework.Graphics"
+            xmlns:Generic="System.Collections.Generic">
+  <Asset Type="EntityPipeline.EntityDictionary">
+    <Item>
+      <Key>Ship</Key>
+      <Value>
+        <Attribute>
+          <Key>Transform</Key>
+          <Value Type="EntityPipeline.TransformData">
+            <Scale>0.001 0.001 0.001</Scale>
+          </Value>
+        </Attribute>
+        <Attribute>
+          <Key>Velocity</Key>
+          <Value Type="Framework:Vector3">0 0 -2.0</Value>
+        </Attribute>
+        <Component>
+          <Key>ModelRenderComponent</Key>
+          <Value>
+            <ComponentData>
+              <Key>Model</Key>
+              <Value Type="string">Models/Ship</Value>
+            </ComponentData>
+          </Value>
+        </Component>
+        <Component>
+          <Key>MoveComponent</Key>
+          <Value></Value>
+        </Component>
+      </Value>
+    </Item>
+  </Asset>
+</XnaContent>

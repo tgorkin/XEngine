@@ -5,17 +5,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-
 namespace EntityPipeline {
-    public class PositionAttributeData {
+    public class TransformData {
 
         [ContentSerializer( Optional = true )]
-        public Vector3 Position;
+        public Vector3 Position = new Vector3();
 
         [ContentSerializer( Optional = true )]
-        public Matrix Rotation;
+        public Vector3 Scale = new Vector3( 1.0f );
 
         [ContentSerializer( Optional = true )]
-        public Vector3 Scale;
+        public Matrix Rotation = Matrix.Identity;
     }
 }

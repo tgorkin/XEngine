@@ -4,21 +4,37 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using EntityPipeline;
 
 namespace XEngine {
     class ModelRenderComponent : BaseComponent, IEntityComponent {
 
-        private PositionAttribute m_position;
+        private static readonly string COMPONENT_DATA_MODEL = "Model";
+
+        private TransformAttribute m_transform;
+
+        private string m_modelName;
 
         private Model m_model;
 
-        public ModelRenderComponent( Entity entity, String modelName ) : base( entity ) {
-            m_position = entity.getAttribute( Attributes.POSITION ) as PositionAttribute;
-            LoadModel( modelName );
+        public ModelRenderComponent( Entity entity )
+            : base( entity ) {
+           
         }
 
-        private void LoadModel( String modelName ) {
-            m_model = ServiceLocator.Content.Load<Model>( modelName );
+        public ModelRenderComponent( Entity entity, String modelName ) : this( entity ) {
+            m_modelName = modelName;
+        }
+
+        override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {
+            if ( componentTemplate.ComponentData.ContainsKey( COMPONENT_DATA_MODEL ) ) {
+                m_modelName = componentTemplate.ComponentData[COMPONENT_DATA_MODEL] as string;
+            }
+        }
+
+        override public void Initialize() {
+            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as TransformAttribute;
+            m_model = ServiceLocator.Content.Load<Model>( m_modelName );
         }
 
         override public void Draw(GameTime gameTime) {
@@ -27,8 +43,8 @@ namespace XEngine {
 
             ICamera camera = ServiceLocator.Camera;
             Matrix world;
-            if ( m_position != null ) {
-                world = m_position.World;
+            if ( m_transform != null ) {
+                world = m_transform.World;
             } else {
                 world = Matrix.Identity;
             }
@@ -52,24 +68,28 @@ namespace XEngine {
         static public void ComponentTest() {
             XEngineComponentTest testGame = new XEngineComponentTest();
 
-            Entity entity = null;
+            Entity entity1 = null;
+            Entity entity2 = null;
             testGame.InitDelegate = delegate {
-                entity = new Entity();
-                AddShipTestComponent( entity );
-                AddGridTestComponent( entity );
-
+                entity1 = new Entity();
+                entity2 = new Entity();
+                AddShipTestComponent( entity1 );
+                AddGridTestComponent( entity2 );
+                entity1.Initialize();
+                entity2.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
-                entity.Draw( gameTime );
+                entity1.Draw( gameTime );
+                entity2.Draw( gameTime );
             };
             testGame.Run();
         }
 
         static public void AddShipTestComponent(Entity entity) {
-            // Setup a position attribute
-            PositionAttribute position = new PositionAttribute();
-            position.Scale = new Vector3( 0.001f );
-            entity.addAttribute( Attributes.POSITION , position );
+            // Setup a position and scale attribute
+            TransformAttribute transform = new TransformAttribute();
+            transform.Scale = new Vector3(0.001f);
+            entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             // Add a model render component
             ModelRenderComponent renderComponent = new ModelRenderComponent( entity, "Models/Ship" );
@@ -77,30 +97,15 @@ namespace XEngine {
         }
 
         static public void AddGridTestComponent( Entity entity ) {
-            // Setup a position attribute
-            PositionAttribute position = new PositionAttribute();
-            position.Position = new Vector3( 0, -5.0f, 0 );
-            position.Scale = new Vector3( 0.2f );
-            entity.addAttribute( Attributes.POSITION, position );
+            // Setup a position and scale attribute
+            TransformAttribute transform = new TransformAttribute();
+            transform.Position = new Vector3( 0, -0.5f, 0 );
+            transform.Scale = new Vector3( 0.1f );
+            entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             // Add a model render component
             ModelRenderComponent renderComponent = new ModelRenderComponent( entity, "Models/Grid" );
             entity.AddComponent( renderComponent );
-        }
-
-        static public void SerializeTest() {
-            XEngineComponentTest testGame = new XEngineComponentTest();
-
-            Entity entity = null;
-            testGame.InitDelegate = delegate {
-                entity = new Entity();
-                AddShipTestComponent( entity );
-                AddGridTestComponent( entity );
-                EntityPipeline.EntityData.SaveToXml( entity );
-            };
-            testGame.Run();
-
-            
         }
 
     }
