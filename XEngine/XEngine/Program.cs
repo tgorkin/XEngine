@@ -22,7 +22,10 @@ namespace XEngine {
 
             //EntityFactory.LoadEntityDataTest();
             //EntityFactory.LoadEntityListTest();
-            EntityFactory.CreateEntityTest();
+            //EntityFactory.CreateEntityTest();
+
+            //ScenegraphManager.ComponentTest();
+            ComponentTests.TankTurretTest();
         }
     }
 #endif

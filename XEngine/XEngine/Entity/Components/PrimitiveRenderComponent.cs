@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using XEngineTypes;
 
 namespace XEngine {
     class PrimitiveRenderComponent : BaseComponent {
@@ -14,7 +15,7 @@ namespace XEngine {
 
         private bool m_wireframe;
 
-        private TransformAttribute m_transform;
+        private EntityAttribute<Transform> m_transform;
 
         private GeometricPrimitive m_primitive;
 
@@ -75,7 +76,7 @@ namespace XEngine {
         override public void Initialize() {
             m_primitive = GeometricPrimitive.Factory( this.m_primitiveType );
             InitializeBuffers();
-            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as TransformAttribute;
+            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
             m_basicEffect = new BasicEffect( ServiceLocator.Graphics );
             m_rasterizerState = new RasterizerState();
             ToggleWireframe( m_wireframe );
@@ -85,7 +86,7 @@ namespace XEngine {
             ICamera camera = ServiceLocator.Camera;
 
             // Set BasicEffect parameters.
-            m_basicEffect.World = m_transform.World;
+            m_basicEffect.World = m_transform.Value.World;
             m_basicEffect.View = camera.View;
             m_basicEffect.Projection = camera.Projection;
             m_basicEffect.DiffuseColor = m_color.ToVector3();
@@ -160,7 +161,8 @@ namespace XEngine {
         }
 
         static public void AddSphereTestComponent( Entity entity ) {
-            TransformAttribute transform = new TransformAttribute();
+            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
+            transform.Value = new Transform();
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity, GeometricPrimitveType.Sphere, Color.Green );
@@ -169,8 +171,9 @@ namespace XEngine {
         }
 
         static public void AddCubeTestComponent( Entity entity ) {
-            TransformAttribute transform = new TransformAttribute();
-            transform.Position = new Vector3( 1.0f, 0, 0 );
+            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
+            transform.Value = new Transform();
+            transform.Value.Position = new Vector3( 1.0f, 0, 0 );
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity, GeometricPrimitveType.Cube, Color.LightBlue );

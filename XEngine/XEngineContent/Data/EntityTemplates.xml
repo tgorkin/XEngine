@@ -8,7 +8,7 @@
       <Value>
         <Attribute>
           <Key>Transform</Key>
-          <Value Type="EntityPipeline.TransformData">
+          <Value Type="XEngineTypes.Transform">
             <Scale>0.001 0.001 0.001</Scale>
           </Value>
         </Attribute>
@@ -28,6 +28,37 @@
         <Component>
           <Key>MoveComponent</Key>
           <Value></Value>
+        </Component>
+      </Value>
+    </Item>
+    <Item>
+      <Key>Tank</Key>
+      <Value>
+        <Component>
+          <Key>ModelRenderComponent</Key>
+          <Value>
+            <ComponentData>
+              <Key>Model</Key>
+              <Value Type="string">Models/Tank</Value>
+            </ComponentData>
+          </Value>
+        </Component>
+        <Component>
+          <Key>ModelBoneControllerComponent</Key>
+          <Value>
+            <ComponentData>
+              <Key>Bone</Key>
+              <Value Type="string">turret</Value>
+            </ComponentData>
+            <ComponentData>
+              <Key>TransformType</Key>
+              <Value Type="XEngineTypes.TransformType">RotationY</Value>
+            </ComponentData>
+            <ComponentData>
+              <Key>Speed</Key>
+              <Value Type="float">0.05</Value>
+            </ComponentData>
+          </Value>
         </Component>
       </Value>
     </Item>

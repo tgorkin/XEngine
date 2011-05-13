@@ -5,25 +5,32 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using EntityPipeline;
+using XEngineTypes;
 
 namespace XEngine {
     class ModelRenderComponent : BaseComponent, IEntityComponent {
 
         private static readonly string COMPONENT_DATA_MODEL = "Model";
 
-        private TransformAttribute m_transform;
+        private EntityAttribute<Transform> m_transform;
 
         private string m_modelName;
 
-        private Model m_model;
+        protected Model m_model;
+
+        protected Matrix[] m_absoluteBoneTransforms;
 
         public ModelRenderComponent( Entity entity )
             : base( entity ) {
            
         }
 
-        public ModelRenderComponent( Entity entity, String modelName ) : this( entity ) {
-            m_modelName = modelName;
+        public string ModelName {
+            set { m_modelName = value; }
+        }
+
+        public Model Model {
+            get { return m_model; }
         }
 
         override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {
@@ -33,22 +40,21 @@ namespace XEngine {
         }
 
         override public void Initialize() {
-            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as TransformAttribute;
+            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
             m_model = ServiceLocator.Content.Load<Model>( m_modelName );
+            m_absoluteBoneTransforms = new Matrix[m_model.Bones.Count];
+            
         }
 
         override public void Draw(GameTime gameTime) {
-            Matrix[] transforms = new Matrix[m_model.Bones.Count];
-            m_model.CopyAbsoluteBoneTransformsTo( transforms );
-
             ICamera camera = ServiceLocator.Camera;
             Matrix world;
             if ( m_transform != null ) {
-                world = m_transform.World;
+                world = m_transform.Value.World;
             } else {
                 world = Matrix.Identity;
             }
-
+            m_model.CopyAbsoluteBoneTransformsTo( m_absoluteBoneTransforms );
             foreach ( ModelMesh mesh in m_model.Meshes ) {
                 foreach ( BasicEffect effect in mesh.Effects ) {
                     effect.EnableDefaultLighting();
@@ -58,12 +64,11 @@ namespace XEngine {
 
                     effect.View = camera.View;
                     effect.Projection = camera.Projection;
-                    effect.World = transforms[mesh.ParentBone.Index] * world;
+                    effect.World = m_absoluteBoneTransforms[mesh.ParentBone.Index] * world;
                 }
                 mesh.Draw();
             }
         }
-
 
         static public void ComponentTest() {
             XEngineComponentTest testGame = new XEngineComponentTest();
@@ -87,26 +92,29 @@ namespace XEngine {
 
         static public void AddShipTestComponent(Entity entity) {
             // Setup a position and scale attribute
-            TransformAttribute transform = new TransformAttribute();
-            transform.Scale = new Vector3(0.001f);
+            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
+            transform.Value = new Transform();
+            transform.Value.Scale = new Vector3(0.001f);
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             // Add a model render component
-            ModelRenderComponent renderComponent = new ModelRenderComponent( entity, "Models/Ship" );
+            ModelRenderComponent renderComponent = new ModelRenderComponent( entity );
+            renderComponent.ModelName = "Models/Ship";
             entity.AddComponent( renderComponent );
         }
 
         static public void AddGridTestComponent( Entity entity ) {
             // Setup a position and scale attribute
-            TransformAttribute transform = new TransformAttribute();
-            transform.Position = new Vector3( 0, -0.5f, 0 );
-            transform.Scale = new Vector3( 0.1f );
+            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
+            transform.Value = new Transform();
+            transform.Value.Position = new Vector3( 0, -0.5f, 0 );
+            transform.Value.Scale = new Vector3( 0.1f );
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             // Add a model render component
-            ModelRenderComponent renderComponent = new ModelRenderComponent( entity, "Models/Grid" );
+            ModelRenderComponent renderComponent = new ModelRenderComponent( entity );
+            renderComponent.ModelName = "Models/Grid";
             entity.AddComponent( renderComponent );
         }
-
     }
 }

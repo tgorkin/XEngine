@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using EntityPipeline;
+using XEngineTypes;
 
 namespace XEngine {
     class OrbitComponent : BaseComponent {
@@ -12,7 +13,7 @@ namespace XEngine {
 
         private static readonly string COMPONENT_DATA_PERIOD = "Period";
 
-        private TransformAttribute m_transform;
+        private EntityAttribute<Transform> m_transform;
 
         public float Radius { get; set; }
 
@@ -21,17 +22,17 @@ namespace XEngine {
         public OrbitComponent( Entity entity ) : base( entity ) { }
 
         override public void Initialize() {
-            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as TransformAttribute;
+            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
         }
 
         override public void Update( GameTime gameTime ) {
-            Vector3 origPostion = m_transform.Position;
+            Vector3 origPostion = m_transform.Value.Position;
             float cycleProgress = (float)gameTime.TotalGameTime.TotalMilliseconds / Period;
 
             origPostion.X = (float)Math.Cos( cycleProgress ) * Radius;
             origPostion.Y = (float)Math.Sin( cycleProgress ) * Radius;
 
-            m_transform.Position = origPostion;
+            m_transform.Value.Position = origPostion;
         }
 
         override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {

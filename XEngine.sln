@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainPipeline", "TerrainP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityPipeline", "EntityPipeline\EntityPipeline.csproj", "{7CD87882-E19C-4834-83A1-BFDF5875F90B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XEngineTypes", "XEngineTypes\XEngineTypes.csproj", "{41BBA000-DD96-421B-8927-8BE7FA131F0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -57,6 +59,14 @@ Global
 		{7CD87882-E19C-4834-83A1-BFDF5875F90B}.Release|Xbox 360.Build.0 = Debug|x86
 		{7CD87882-E19C-4834-83A1-BFDF5875F90B}.Release|Zune.ActiveCfg = Debug|x86
 		{7CD87882-E19C-4834-83A1-BFDF5875F90B}.Release|Zune.Build.0 = Debug|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Debug|x86.ActiveCfg = Debug|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Debug|x86.Build.0 = Debug|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Debug|Zune.ActiveCfg = Debug|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Release|x86.ActiveCfg = Release|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Release|x86.Build.0 = Release|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Release|Xbox 360.ActiveCfg = Release|x86
+		{41BBA000-DD96-421B-8927-8BE7FA131F0F}.Release|Zune.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

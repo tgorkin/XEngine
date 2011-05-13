@@ -114,10 +114,10 @@
     <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Entity\Attributes\AttributeConstants.cs" />
     <Compile Include="Entity\Attributes\EntityAttribute.cs" />
-    <Compile Include="Entity\Attributes\TransformAttribute.cs" />
     <Compile Include="Entity\Components\BaseComponent.cs" />
     <Compile Include="Entity\Components\OrbitComponent.cs" />
     <Compile Include="Entity\Components\PrimitiveRenderComponent.cs" />
+    <Compile Include="Entity\Components\ModelBoneControllerComponent.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\EntityFactory.cs" />
     <Compile Include="Entity\Attributes\IEntityAttribute.cs" />
@@ -130,11 +130,14 @@
     <Compile Include="Graphics\VertexPositionNormal.cs" />
     <Compile Include="Managers\IInputManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\ScenegraphManager.cs" />
+    <Compile Include="Managers\ScenegraphNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ServiceLocator.cs" />
     <Compile Include="Terrain\Terrain.cs" />
     <Compile Include="Terrain\TerrainReader.cs" />
+    <Compile Include="Testing\ComponentTests.cs" />
     <Compile Include="Testing\DebugHUD.cs" />
     <Compile Include="Testing\XEngineComponentTest.cs" />
     <Compile Include="Utils\StringUtils.cs" />
@@ -153,6 +156,10 @@
     <ProjectReference Include="..\..\TerrainPipeline\TerrainPipeline.csproj">
       <Project>{B62736C6-A95D-4DC4-963C-180E65CD3356}</Project>
       <Name>TerrainPipeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XEngineTypes\XEngineTypes.csproj">
+      <Project>{41BBA000-DD96-421B-8927-8BE7FA131F0F}</Project>
+      <Name>XEngineTypes</Name>
     </ProjectReference>
     <ProjectReference Include="..\XEngineContent\XEngineContent.contentproj">
       <Name>XEngineContent</Name>

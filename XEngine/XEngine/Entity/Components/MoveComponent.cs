@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using XEngineTypes;
 
 namespace XEngine {
     class MoveComponent : BaseComponent, IEntityComponent {
 
-        TransformAttribute m_transform;
+        private EntityAttribute<Transform> m_transform;
 
-        EntityAttribute<Vector3> m_velocity;
+        private EntityAttribute<Vector3> m_velocity;
 
         public MoveComponent( Entity entity ) : base( entity ) { }
 
         override public void Initialize() {
-            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as TransformAttribute;
+            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
             m_velocity = this.Entity.GetAttribute( Attributes.VELOCITY ) as EntityAttribute<Vector3>;
         }
 
         override public void Update( GameTime gameTime ) {
-            m_transform.Position += Vector3.Multiply( m_velocity.Value, (float)gameTime.ElapsedGameTime.Milliseconds / 1000 );
+            m_transform.Value.Position += Vector3.Multiply( m_velocity.Value, (float)gameTime.ElapsedGameTime.Milliseconds / 1000 );
         }
 
         static public void ComponentTest() {

@@ -1,6 +1,7 @@
 Content\Fonts\DefaultFont.xnb
 Content\HeightMaps\testheightmap.xnb
 Content\Models\Ship.xnb
+Content\Models\Tank.xnb
 Content\Textures\grass.xnb
 Content\Models\Grid.xnb
 Content\Data\EntityTest.xnb

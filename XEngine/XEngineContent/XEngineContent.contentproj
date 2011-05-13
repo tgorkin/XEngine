@@ -85,6 +85,10 @@
       <Project>{B62736C6-A95D-4DC4-963C-180E65CD3356}</Project>
       <Name>TerrainPipeline</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XEngineTypes\XEngineTypes.csproj">
+      <Project>{41BBA000-DD96-421B-8927-8BE7FA131F0F}</Project>
+      <Name>XEngineTypes</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\EntityTest.xml">
@@ -99,6 +103,14 @@
       <Name>EntityTemplates</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
+      <SubType>Designer</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Tank.fbx">
+      <Name>Tank</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

@@ -21,6 +21,17 @@ namespace XEngine {
             m_components.Add( newComponent );
         }
 
+        public IEntityComponent GetComponentOfType( Type type ) {
+            IEntityComponent result = null;
+            foreach ( IEntityComponent component in m_components ) {
+                if ( component.GetType() == type ) {
+                    result = component;
+                    break;
+                }
+            }
+            return result;
+        }
+
         public IEntityAttribute GetAttribute( string attributeName ) {
             IEntityAttribute result = null;
             if ( m_attributes.ContainsKey( attributeName ) ) {

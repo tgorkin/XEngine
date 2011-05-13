@@ -19,13 +19,8 @@ namespace XEngine {
                 EntityTemplate entityTemplate = m_entityDictionary[entityTemplateName];
                 // create and load data for all entity attributes
                 foreach ( KeyValuePair<string, object> attributeData in entityTemplate.Attributes ) {
-                    IEntityAttribute attribute = null;
-                    if ( attributeData.Key == Attributes.TRANSFORM ) {
-                        attribute = new TransformAttribute( attributeData.Value as TransformData );
-                    } else {
-                        Type attributeDataType = Type.GetType( "XEngine.EntityAttribute`1" ).MakeGenericType( attributeData.Value.GetType() );
-                        attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeDataType, attributeData.Value ) );
-                    }
+                    Type attributeDataType = Type.GetType( "XEngine.EntityAttribute`1" ).MakeGenericType( attributeData.Value.GetType() );
+                    IEntityAttribute attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeDataType, attributeData.Value ) );
                     newEntity.AddAttribute( attributeData.Key, attribute );
                 }
                 // create and load data for all entity components
