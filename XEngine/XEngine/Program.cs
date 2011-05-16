@@ -20,12 +20,13 @@ namespace XEngine {
             //OrbitComponent.ComponentTest();
             //PrimitiveRenderComponent.ComponentTest();
 
-            //EntityFactory.LoadEntityDataTest();
             //EntityFactory.LoadEntityListTest();
-            //EntityFactory.CreateEntityTest();
+            //EntityFactory.EntityTest( "Ship" );
+            //EntityFactory.EntityTest( "Tank" );
+            EntityFactory.EntityTest( "Sphere" );
 
             //ScenegraphManager.ComponentTest();
-            ComponentTests.TankTurretTest();
+            //ComponentTests.TankTurretTest();
         }
     }
 #endif

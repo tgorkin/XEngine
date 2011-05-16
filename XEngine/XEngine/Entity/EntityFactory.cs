@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using EntityPipeline;
+using XEngineTypes;
 using Microsoft.Xna.Framework;
 
 namespace XEngine {
@@ -24,26 +24,16 @@ namespace XEngine {
                     newEntity.AddAttribute( attributeData.Key, attribute );
                 }
                 // create and load data for all entity components
-                foreach ( KeyValuePair<string, ComponentTemplate> componentTemplate in entityTemplate.Components ) {
-                    Type componentDataType = Type.GetType( "XEngine." + componentTemplate.Key );
-                    IEntityComponent component = (IEntityComponent)( System.Activator.CreateInstance( componentDataType, newEntity ) );
+                foreach ( KeyValuePair<string, ComponentData> componentTemplate in entityTemplate.Components ) {
+                    Type componentType = Type.GetType( "XEngine." + componentTemplate.Key );
+                    IEntityComponent component = (IEntityComponent)( System.Activator.CreateInstance( componentType, newEntity ) );
                     if ( componentTemplate.Value != null ) {
-                        component.LoadFromTemplate( componentTemplate.Value );
+                        component.LoadData( componentTemplate.Value );
                     }
                     newEntity.AddComponent( component );
                 }
             }
             return newEntity;
-        }
-
-        static public void LoadEntityDataTest() {
-            XEngineComponentTest testGame = new XEngineComponentTest();
-
-            testGame.InitDelegate = delegate {
-                EntityTemplate entityTemplate = ServiceLocator.Content.Load<EntityTemplate>( "Data/EntityTest" );
-                System.Diagnostics.Debugger.Break();
-            };
-            testGame.Run();
         }
 
         static public void LoadEntityListTest() {
@@ -56,14 +46,14 @@ namespace XEngine {
             testGame.Run();
         }
 
-        static public void CreateEntityTest() {
+        static public void EntityTest(string entityName) {
             XEngineComponentTest testGame = new XEngineComponentTest();
 
             EntityFactory entityFactory = new EntityFactory();
             Entity entity = null;
             testGame.InitDelegate = delegate {
                 entityFactory.LoadEntityTemplates( "Data/EntityTemplates" );
-                entity = entityFactory.CreateEntity( "Ship" );
+                entity = entityFactory.CreateEntity( entityName );
                 entity.Initialize();
             };
             testGame.UpdateDelegate = delegate( GameTime gameTime ) {

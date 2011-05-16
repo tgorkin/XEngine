@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using EntityPipeline;
+using XEngineTypes;
 
 namespace XEngine {
     class BaseComponent : IEntityComponent {
@@ -18,7 +18,7 @@ namespace XEngine {
             this.m_entity = entity;
         }
 
-        virtual public void LoadFromTemplate(ComponentTemplate componentTemplate) { }
+        virtual public void LoadData( ComponentData data ) { }
 
         virtual public void Initialize() { }
 

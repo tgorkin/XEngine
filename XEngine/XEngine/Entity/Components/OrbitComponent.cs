@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using EntityPipeline;
 using XEngineTypes;
 
 namespace XEngine {
@@ -35,14 +34,14 @@ namespace XEngine {
             m_transform.Value.Position = origPostion;
         }
 
-        override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {
+        /*override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {
             if ( componentTemplate.ComponentData.ContainsKey( COMPONENT_DATA_RADIUS ) ) {
                 this.Radius = (float)componentTemplate.ComponentData[COMPONENT_DATA_RADIUS];
             }
             if ( componentTemplate.ComponentData.ContainsKey( COMPONENT_DATA_PERIOD ) ) {
                 this.Period = (float)componentTemplate.ComponentData[COMPONENT_DATA_PERIOD];
             }
-        }
+        }*/
 
         static public void ComponentTest() {
             XEngineComponentTest testGame = new XEngineComponentTest();

@@ -4,25 +4,21 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using EntityPipeline;
 using XEngineTypes;
 
 namespace XEngine {
     class ModelRenderComponent : BaseComponent, IEntityComponent {
 
-        private static readonly string COMPONENT_DATA_MODEL = "Model";
-
-        private EntityAttribute<Transform> m_transform;
-
         private string m_modelName;
 
         protected Model m_model;
+
+        private EntityAttribute<Transform> m_transform;
 
         protected Matrix[] m_absoluteBoneTransforms;
 
         public ModelRenderComponent( Entity entity )
             : base( entity ) {
-           
         }
 
         public string ModelName {
@@ -33,9 +29,10 @@ namespace XEngine {
             get { return m_model; }
         }
 
-        override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {
-            if ( componentTemplate.ComponentData.ContainsKey( COMPONENT_DATA_MODEL ) ) {
-                m_modelName = componentTemplate.ComponentData[COMPONENT_DATA_MODEL] as string;
+        override public void LoadData( ComponentData componentData ) {
+            ModelRenderData data = componentData as ModelRenderData;
+            if ( data != null ) {
+                m_modelName = data.Model;
             }
         }
 

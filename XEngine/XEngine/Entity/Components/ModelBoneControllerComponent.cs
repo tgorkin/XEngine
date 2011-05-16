@@ -5,13 +5,10 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using EntityPipeline;
 using XEngineTypes;
 
 namespace XEngine {
     class ModelBoneControllerComponent : BaseComponent {
-
-        private static readonly float DEFAULT_SPEED = 1.0f;
 
         private string m_boneName;
 
@@ -30,17 +27,12 @@ namespace XEngine {
            
         }
 
-        override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {
-            if ( componentTemplate.ComponentData.ContainsKey( "Bone" ) ) {
-                m_boneName = componentTemplate.ComponentData["Bone"] as string;
-            }
-            if ( componentTemplate.ComponentData.ContainsKey( "Speed" ) ) {
-                m_speed = (float)componentTemplate.ComponentData["Speed"];
-            } else {
-                m_speed = DEFAULT_SPEED;
-            }
-            if ( componentTemplate.ComponentData.ContainsKey( "TransformType" ) ) {
-                m_transformType = (TransformType)componentTemplate.ComponentData["TransformType"];
+        override public void LoadData( ComponentData componentData ) {
+            ModelBoneControllerData data = componentData as ModelBoneControllerData;
+            if ( data != null ) {
+                m_boneName = data.BoneName;
+                m_transformType = data.TransformType;
+                m_speed = data.Speed;
             }
         }
 

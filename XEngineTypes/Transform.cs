@@ -24,59 +24,67 @@ namespace XEngineTypes {
 
     public class Transform {
 
+        private Transform m_parent;
+
         private Vector3 m_position = new Vector3();
 
         private Matrix m_rotation = Matrix.Identity;
 
         private Vector3 m_scale = new Vector3( 1.0f );
 
-        private Matrix m_local = Matrix.Identity;
-
         private Matrix m_world = Matrix.Identity;
+
+        [ContentSerializerIgnore]
+        public Transform Parent {
+            set { m_parent = value; }
+        }
 
         [ContentSerializer( Optional = true )]
         public Vector3 Position {
-            get { return m_position; }
+            get {
+                return m_position;
+            }
             set {
                 m_position = value;
-                UpdateLocal();
             }
         }
 
         [ContentSerializer( Optional = true )]
         public Matrix Rotation {
-            get { return m_rotation; }
+            get {
+                return m_rotation;
+            }
             set {
                 m_rotation = value;
-                UpdateLocal();
             }
         }
 
         [ContentSerializer( Optional = true )]
         public Vector3 Scale {
-            get { return m_scale; }
+            get {
+                return m_scale;
+            }
             set {
                 m_scale = value;
-                UpdateLocal();
             }
         }
 
         [ContentSerializerIgnore]
         public Matrix Local {
-            get { return m_local; }
+            get {
+                return Matrix.CreateScale( m_scale ) * m_rotation * Matrix.CreateTranslation( m_position );
+            }
         }
 
         [ContentSerializerIgnore]
         public Matrix World {
-            get { return m_world; }
-        }
-
-        private void UpdateLocal() {
-            m_local = Matrix.CreateScale( Scale ) * Rotation * Matrix.CreateTranslation( Position );
-        }
-
-        public void UpdateWorld( Transform parent ) {
-            m_world = Matrix.CreateScale( Scale * parent.Scale ) * Rotation * parent.Rotation * Matrix.CreateTranslation( parent.Position + Position );
+            get {
+                Matrix parent = Matrix.Identity;
+                if ( m_parent != null ) {
+                    parent = m_parent.World;
+                }
+                return Local * parent;
+            }
         }
 
         public static Transform CreateFromType( TransformType type, float value ) {

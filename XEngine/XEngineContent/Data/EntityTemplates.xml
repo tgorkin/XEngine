@@ -2,13 +2,14 @@
 <XnaContent xmlns:Framework="Microsoft.Xna.Framework"
             xmlns:Graphics="Microsoft.Xna.Framework.Graphics"
             xmlns:Generic="System.Collections.Generic">
-  <Asset Type="EntityPipeline.EntityDictionary">
+  <Asset Type="XEngineTypes.EntityDictionary">
     <Item>
       <Key>Ship</Key>
       <Value>
         <Attribute>
           <Key>Transform</Key>
           <Value Type="XEngineTypes.Transform">
+            <Position>0 1.0 0</Position>
             <Scale>0.001 0.001 0.001</Scale>
           </Value>
         </Attribute>
@@ -18,16 +19,9 @@
         </Attribute>
         <Component>
           <Key>ModelRenderComponent</Key>
-          <Value>
-            <ComponentData>
-              <Key>Model</Key>
-              <Value Type="string">Models/Ship</Value>
-            </ComponentData>
+          <Value Type="XEngineTypes.ModelRenderData">
+            <Model>Models/Ship</Model>
           </Value>
-        </Component>
-        <Component>
-          <Key>MoveComponent</Key>
-          <Value></Value>
         </Component>
       </Value>
     </Item>
@@ -36,28 +30,29 @@
       <Value>
         <Component>
           <Key>ModelRenderComponent</Key>
-          <Value>
-            <ComponentData>
-              <Key>Model</Key>
-              <Value Type="string">Models/Tank</Value>
-            </ComponentData>
+          <Value Type="XEngineTypes.ModelRenderData">
+            <Model>Models/Tank</Model>
           </Value>
         </Component>
         <Component>
           <Key>ModelBoneControllerComponent</Key>
-          <Value>
-            <ComponentData>
-              <Key>Bone</Key>
-              <Value Type="string">turret</Value>
-            </ComponentData>
-            <ComponentData>
-              <Key>TransformType</Key>
-              <Value Type="XEngineTypes.TransformType">RotationY</Value>
-            </ComponentData>
-            <ComponentData>
-              <Key>Speed</Key>
-              <Value Type="float">0.05</Value>
-            </ComponentData>
+          <Value Type="XEngineTypes.ModelBoneControllerData">
+            <BoneName>turret</BoneName>
+            <TransformType>RotationY</TransformType>
+            <Speed>0.05</Speed>
+          </Value>
+        </Component>
+      </Value>
+    </Item>
+    <Item>
+      <Key>Sphere</Key>
+      <Value>
+        <Component>
+          <Key>PrimitiveRenderComponent</Key>
+          <Value Type="XEngineTypes.PrimitiveRenderData">
+            <PrimitiveType>Sphere</PrimitiveType>
+            <Color>FF00FF00</Color>
+            <Wireframe>false</Wireframe>
           </Value>
         </Component>
       </Value>

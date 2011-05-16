@@ -9,19 +9,15 @@ using XEngineTypes;
 namespace XEngine {
     class PrimitiveRenderComponent : BaseComponent {
 
-        private GeometricPrimitveType m_primitiveType;
+        private GeometricPrimitiveType m_primitiveType;
 
-        private Color m_color;
+        private Color m_color = Color.White;
 
         private bool m_wireframe;
 
         private EntityAttribute<Transform> m_transform;
 
         private GeometricPrimitive m_primitive;
-
-        private int m_vertexCount;
-
-        private int m_indexCount;
 
         private VertexBuffer m_vertexBuffer;
 
@@ -31,10 +27,8 @@ namespace XEngine {
 
         private RasterizerState m_rasterizerState;
 
-        public PrimitiveRenderComponent( Entity entity, GeometricPrimitveType type, Color color )
+        public PrimitiveRenderComponent( Entity entity)
             : base( entity ) {
-            m_primitiveType = type;
-            m_color = color;
         }
 
         ~PrimitiveRenderComponent() {
@@ -55,6 +49,15 @@ namespace XEngine {
                 m_basicEffect.Dispose();
         }
 
+
+        public Color Color {
+            set { m_color = value; }
+        }
+
+        public GeometricPrimitiveType GeometricPrimitiveType {
+            set { m_primitiveType = value; }
+        }
+
         public bool Wireframe {
             set {
                 m_wireframe = value;
@@ -73,6 +76,15 @@ namespace XEngine {
             }
         }
 
+        override public void LoadData( ComponentData componentData ) {
+            PrimitiveRenderData data = componentData as PrimitiveRenderData;
+            if ( data != null ) {
+                this.GeometricPrimitiveType = data.PrimitiveType;
+                this.Color = data.Color;
+                this.Wireframe = data.Wireframe;
+            }
+        }
+
         override public void Initialize() {
             m_primitive = GeometricPrimitive.Factory( this.m_primitiveType );
             InitializeBuffers();
@@ -85,8 +97,15 @@ namespace XEngine {
         override public void Draw( GameTime gameTime ) {
             ICamera camera = ServiceLocator.Camera;
 
+            Matrix world;
+            if ( m_transform != null ) {
+                world = m_transform.Value.World;
+            } else {
+                world = Matrix.Identity;
+            }
+
             // Set BasicEffect parameters.
-            m_basicEffect.World = m_transform.Value.World;
+            m_basicEffect.World = world;
             m_basicEffect.View = camera.View;
             m_basicEffect.Projection = camera.Projection;
             m_basicEffect.DiffuseColor = m_color.ToVector3();
@@ -111,28 +130,22 @@ namespace XEngine {
             foreach ( EffectPass effectPass in m_basicEffect.CurrentTechnique.Passes ) {
                 effectPass.Apply();
 
-                int primitiveCount = m_indexCount / 3;
-
-                graphicsDevice.DrawIndexedPrimitives( PrimitiveType.TriangleList, 0, 0, m_vertexCount, 0, primitiveCount );
+                graphicsDevice.DrawIndexedPrimitives( PrimitiveType.TriangleList, 0, 0, m_primitive.VertexCount, 0, m_primitive.PrimitiveCount );
 
             }
         }
 
         private void InitializeBuffers() {
             GraphicsDevice graphicsDevice = ServiceLocator.Graphics;
-            if ( graphicsDevice != null ) {
+            if ( graphicsDevice != null && m_primitive != null) {
 
                 // Create a vertex buffer, and copy our vertex data into it.
-                List<VertexPositionNormal> vertices = m_primitive.Vertices;
-                m_vertexCount = vertices.Count;
-                m_vertexBuffer = new VertexBuffer( graphicsDevice, typeof( VertexPositionNormal ), m_vertexCount, BufferUsage.None );
+                m_vertexBuffer = new VertexBuffer( graphicsDevice, VertexPositionNormal.VertexDeclaration, m_primitive.VertexCount, BufferUsage.None );
                 m_vertexBuffer.SetData( m_primitive.Vertices.ToArray() );
 
                 // Create an index buffer, and copy our index data into it.
-                List<ushort> indices = m_primitive.Indices;
-                m_indexCount = indices.Count;
-                m_indexBuffer = new IndexBuffer( graphicsDevice, typeof( ushort ), m_indexCount, BufferUsage.None );
-                m_indexBuffer.SetData( indices.ToArray() );
+                m_indexBuffer = new IndexBuffer( graphicsDevice, typeof( ushort ), m_primitive.IndexCount, BufferUsage.None );
+                m_indexBuffer.SetData( m_primitive.Indices.ToArray() );
 
                 // Create a BasicEffect, which will be used to render the primitive.
                 m_basicEffect = new BasicEffect( graphicsDevice );
@@ -165,7 +178,9 @@ namespace XEngine {
             transform.Value = new Transform();
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
-            PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity, GeometricPrimitveType.Sphere, Color.Green );
+            PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity );
+            renderComponent.GeometricPrimitiveType = GeometricPrimitiveType.Sphere;
+            renderComponent.Color = Color.Green;
             renderComponent.Wireframe = false;
             entity.AddComponent( renderComponent );
         }
@@ -176,7 +191,9 @@ namespace XEngine {
             transform.Value.Position = new Vector3( 1.0f, 0, 0 );
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
-            PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity, GeometricPrimitveType.Cube, Color.LightBlue );
+            PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity );
+            renderComponent.GeometricPrimitiveType = GeometricPrimitiveType.Cube;
+            renderComponent.Color = Color.LightBlue;
             renderComponent.Wireframe = true;
             entity.AddComponent( renderComponent );
         }

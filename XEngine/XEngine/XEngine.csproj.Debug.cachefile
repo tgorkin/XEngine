@@ -4,7 +4,6 @@ Content\Models\Ship.xnb
 Content\Models\Tank.xnb
 Content\Textures\grass.xnb
 Content\Models\Grid.xnb
-Content\Data\EntityTest.xnb
 Content\Data\EntityTemplates.xnb
 Content\Models\ShipDiffuse_0.xnb
 Content\Models\checker_0.xnb

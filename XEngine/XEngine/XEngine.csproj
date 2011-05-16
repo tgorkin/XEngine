@@ -114,18 +114,19 @@
     <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Entity\Attributes\AttributeConstants.cs" />
     <Compile Include="Entity\Attributes\EntityAttribute.cs" />
+    <Compile Include="Entity\Attributes\IEntityAttribute.cs" />
     <Compile Include="Entity\Components\BaseComponent.cs" />
     <Compile Include="Entity\Components\OrbitComponent.cs" />
     <Compile Include="Entity\Components\PrimitiveRenderComponent.cs" />
     <Compile Include="Entity\Components\ModelBoneControllerComponent.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\EntityFactory.cs" />
-    <Compile Include="Entity\Attributes\IEntityAttribute.cs" />
     <Compile Include="Entity\Components\IEntityComponent.cs" />
     <Compile Include="Entity\Components\MoveComponent.cs" />
     <Compile Include="Entity\Components\ModelRenderComponent.cs" />
     <Compile Include="Graphics\Cube.cs" />
     <Compile Include="Graphics\GeometricPrimitive.cs" />
+    <Compile Include="Graphics\Origin.cs" />
     <Compile Include="Graphics\Sphere.cs" />
     <Compile Include="Graphics\VertexPositionNormal.cs" />
     <Compile Include="Managers\IInputManager.cs" />
@@ -149,10 +150,6 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\EntityPipeline\EntityPipeline.csproj">
-      <Project>{7CD87882-E19C-4834-83A1-BFDF5875F90B}</Project>
-      <Name>EntityPipeline</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\TerrainPipeline\TerrainPipeline.csproj">
       <Project>{B62736C6-A95D-4DC4-963C-180E65CD3356}</Project>
       <Name>TerrainPipeline</Name>

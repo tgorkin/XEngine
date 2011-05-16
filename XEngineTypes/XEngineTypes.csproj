@@ -92,6 +92,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityData\ComponentData.cs" />
+    <Compile Include="EntityData\EntityDictionary.cs" />
+    <Compile Include="EntityData\EntityTemplate.cs" />
+    <Compile Include="EntityData\ModelBoneControllerData.cs" />
+    <Compile Include="EntityData\ModelRenderData.cs" />
+    <Compile Include="EntityData\PrimitiveRenderData.cs" />
+    <Compile Include="GeometricPrimitiveType.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

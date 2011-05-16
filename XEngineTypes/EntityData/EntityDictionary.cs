@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Content;
 
-namespace EntityPipeline {
+namespace XEngineTypes {
 
     public class EntityDictionary : Dictionary<string, EntityTemplate> {
 
