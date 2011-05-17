@@ -19,6 +19,10 @@ namespace XEngine {
 
         private IInputManager m_inputManager;
 
+        private EntityManager m_entityManager;
+
+        private ScenegraphManager m_scenegraphManager;
+
         private ServiceLocator() { }
 
         static public void Initialize( Game game ) {
@@ -43,6 +47,16 @@ namespace XEngine {
         static public IInputManager InputManager {
             get { return m_instance.m_inputManager; }
             set { m_instance.m_inputManager = value; }
+        }
+
+        static public EntityManager EntityManager {
+            get { return m_instance.m_entityManager; }
+            set { m_instance.m_entityManager = value; }
+        }
+
+        static public ScenegraphManager ScenegraphManager {
+            get { return m_instance.m_scenegraphManager; }
+            set { m_instance.m_scenegraphManager = value; }
         }
     }
 

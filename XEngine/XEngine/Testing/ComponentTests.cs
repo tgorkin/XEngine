@@ -3,25 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using XEngineTypes;
 
 namespace XEngine {
     class ComponentTests {
 
-        static public void TankTurretTest() {
+        static public void LoadLevelData() {
             XEngineComponentTest testGame = new XEngineComponentTest();
 
-            EntityFactory entityFactory = new EntityFactory();
-            Entity entity = null;
             testGame.InitDelegate = delegate {
-                entityFactory.LoadEntityTemplates( "Data/EntityTemplates" );
-                entity = entityFactory.CreateEntity( "Tank" );
-                entity.Initialize();
-            };
-            testGame.UpdateDelegate = delegate( GameTime gameTime ) {
-                entity.Update( gameTime );
-            };
-            testGame.DrawDelegate = delegate( GameTime gameTime ) {
-                entity.Draw( gameTime );
+                LevelData levelData = ServiceLocator.Content.Load<LevelData>( "Data/Level_Test" );
+                System.Diagnostics.Debugger.Break();
             };
             testGame.Run();
         }

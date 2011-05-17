@@ -129,8 +129,10 @@
     <Compile Include="Graphics\Origin.cs" />
     <Compile Include="Graphics\Sphere.cs" />
     <Compile Include="Graphics\VertexPositionNormal.cs" />
+    <Compile Include="Managers\EntityManager.cs" />
     <Compile Include="Managers\IInputManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\LevelManager.cs" />
     <Compile Include="Managers\ScenegraphManager.cs" />
     <Compile Include="Managers\ScenegraphNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

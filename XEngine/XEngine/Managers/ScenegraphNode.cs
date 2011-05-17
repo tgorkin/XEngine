@@ -26,11 +26,26 @@ namespace XEngine {
 
         public void Update() {
             if ( Parent != null ) {
-                //m_transform.UpdateWorld( Parent.m_transform );
+                m_transform.UpdateWorld( Parent.m_transform );
             }
             foreach ( ScenegraphNode childNode in Children ) {
                 childNode.Update();
             }
+        }
+
+        public ScenegraphNode FindByTransform(Transform searchTransform) {
+            ScenegraphNode result = null;
+            if ( m_transform == searchTransform ) {
+                result = this;
+            } else {
+                foreach ( ScenegraphNode childNode in Children ) {
+                    result = childNode.FindByTransform( searchTransform );
+                    if ( result != null ) {
+                        break;
+                    }
+                }
+            }
+            return result;
         }
     }
 }

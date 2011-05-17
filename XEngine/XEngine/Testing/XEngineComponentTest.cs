@@ -64,6 +64,15 @@ namespace XEngine {
                 // Initialize DebugHUD
                 this.Components.Add( new DebugHUD( this ) );
 
+                // Initialize EntityManager
+                EntityManager entityManager = new EntityManager( this );
+                this.Components.Add( entityManager );
+                ServiceLocator.EntityManager = entityManager;
+
+                // Initialize Scenegraph
+                ScenegraphManager scenegraph = new ScenegraphManager( this );
+                this.Components.Add( scenegraph );
+                ServiceLocator.ScenegraphManager = scenegraph;
             }
 
             base.Initialize();

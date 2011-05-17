@@ -9,7 +9,6 @@
         <Attribute>
           <Key>Transform</Key>
           <Value Type="XEngineTypes.Transform">
-            <Position>0 1.0 0</Position>
             <Scale>0.001 0.001 0.001</Scale>
           </Value>
         </Attribute>

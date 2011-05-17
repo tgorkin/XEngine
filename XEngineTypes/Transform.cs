@@ -24,8 +24,6 @@ namespace XEngineTypes {
 
     public class Transform {
 
-        private Transform m_parent;
-
         private Vector3 m_position = new Vector3();
 
         private Matrix m_rotation = Matrix.Identity;
@@ -34,39 +32,22 @@ namespace XEngineTypes {
 
         private Matrix m_world = Matrix.Identity;
 
-        [ContentSerializerIgnore]
-        public Transform Parent {
-            set { m_parent = value; }
-        }
-
         [ContentSerializer( Optional = true )]
         public Vector3 Position {
-            get {
-                return m_position;
-            }
-            set {
-                m_position = value;
-            }
+            get { return m_position; }
+            set {  m_position = value; }
         }
 
         [ContentSerializer( Optional = true )]
         public Matrix Rotation {
-            get {
-                return m_rotation;
-            }
-            set {
-                m_rotation = value;
-            }
+            get { return m_rotation; }
+            set { m_rotation = value; }
         }
 
         [ContentSerializer( Optional = true )]
         public Vector3 Scale {
-            get {
-                return m_scale;
-            }
-            set {
-                m_scale = value;
-            }
+            get { return m_scale; }
+            set { m_scale = value; }
         }
 
         [ContentSerializerIgnore]
@@ -78,13 +59,11 @@ namespace XEngineTypes {
 
         [ContentSerializerIgnore]
         public Matrix World {
-            get {
-                Matrix parent = Matrix.Identity;
-                if ( m_parent != null ) {
-                    parent = m_parent.World;
-                }
-                return Local * parent;
-            }
+            get { return m_world; }
+        }
+
+        public void UpdateWorld(Transform parent) {
+            m_world = Local * parent.World;
         }
 
         public static Transform CreateFromType( TransformType type, float value ) {

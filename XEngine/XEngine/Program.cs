@@ -23,10 +23,10 @@ namespace XEngine {
             //EntityFactory.LoadEntityListTest();
             //EntityFactory.EntityTest( "Ship" );
             //EntityFactory.EntityTest( "Tank" );
-            EntityFactory.EntityTest( "Sphere" );
+            //EntityFactory.EntityTest( "Sphere" );
 
+            LevelManager.LoadLevelData();
             //ScenegraphManager.ComponentTest();
-            //ComponentTests.TankTurretTest();
         }
     }
 #endif

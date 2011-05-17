@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent xmlns:Framework="Microsoft.Xna.Framework"
+            xmlns:Graphics="Microsoft.Xna.Framework.Graphics"
+            xmlns:Generic="System.Collections.Generic">
+  <Asset Type="XEngineTypes.LevelData">
+    <Entities>
+      <Entity>
+        <Name>Ship_1</Name>
+        <Template>Ship</Template>
+      </Entity>
+      <Entity>
+        <Name>Ship_2</Name>
+        <Template>Ship</Template>
+        <Attribute>
+          <Key>Transform</Key>
+          <Value Type="XEngineTypes.Transform">
+            <Position>2.0 0 0</Position>
+            <Scale>0.001 0.001 0.001</Scale>
+          </Value>
+        </Attribute>
+        <Attribute>
+          <Key>Velocity</Key>
+          <Value Type="Framework:Vector3">0 0 -1.0</Value>
+        </Attribute>
+        <Component>
+          <Key>MoveComponent</Key>
+          <Value></Value>
+        </Component>
+      </Entity>
+      <Entity>
+        <Name>Ship_3</Name>
+        <Template>Ship</Template>
+        <Parent>Ship_2</Parent>
+        <Attribute>
+          <Key>Transform</Key>
+          <Value Type="XEngineTypes.Transform">
+            <Position>0 1000 0</Position>
+          </Value>
+        </Attribute>
+      </Entity>
+      <Entity>
+        <Name>Tank_1</Name>
+        <Template>Tank</Template>
+        <Attribute>
+          <Key>Transform</Key>
+          <Value Type="XEngineTypes.Transform">
+            <Position>2.0 0 2.0</Position>
+            <Scale>0.4 0.4 0.4</Scale>
+          </Value>
+        </Attribute>
+      </Entity>
+    </Entities>
+  </Asset>
+
+</XnaContent>

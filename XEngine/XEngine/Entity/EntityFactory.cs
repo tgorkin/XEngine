@@ -17,23 +17,38 @@ namespace XEngine {
             Entity newEntity = new Entity();
             if ( m_entityDictionary.ContainsKey( entityTemplateName ) ) {
                 EntityTemplate entityTemplate = m_entityDictionary[entityTemplateName];
-                // create and load data for all entity attributes
-                foreach ( KeyValuePair<string, object> attributeData in entityTemplate.Attributes ) {
-                    Type attributeDataType = Type.GetType( "XEngine.EntityAttribute`1" ).MakeGenericType( attributeData.Value.GetType() );
-                    IEntityAttribute attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeDataType, attributeData.Value ) );
-                    newEntity.AddAttribute( attributeData.Key, attribute );
-                }
-                // create and load data for all entity components
-                foreach ( KeyValuePair<string, ComponentData> componentTemplate in entityTemplate.Components ) {
-                    Type componentType = Type.GetType( "XEngine." + componentTemplate.Key );
-                    IEntityComponent component = (IEntityComponent)( System.Activator.CreateInstance( componentType, newEntity ) );
-                    if ( componentTemplate.Value != null ) {
-                        component.LoadData( componentTemplate.Value );
-                    }
-                    newEntity.AddComponent( component );
-                }
+                AddAttributes( entityTemplate.Attributes, newEntity );
+                AddComponents( entityTemplate.Components, newEntity );
             }
             return newEntity;
+        }
+
+        public Entity CreateEntityWithData( string entityTemplateName, EntityInstance data ) {
+            Entity newEntity = CreateEntity( entityTemplateName );
+            AddAttributes( data.EntityData.Attributes, newEntity );
+            AddComponents( data.EntityData.Components, newEntity );
+            return newEntity;
+        }
+
+        private void AddAttributes( Dictionary<string, object> attributes, Entity entity ) {
+            // create and load data for all entity attributes
+            foreach ( KeyValuePair<string, object> attributeData in attributes ) {
+                Type attributeDataType = Type.GetType( "XEngine.EntityAttribute`1" ).MakeGenericType( attributeData.Value.GetType() );
+                IEntityAttribute attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeDataType, attributeData.Value ) );
+                entity.AddAttribute( attributeData.Key, attribute );
+            }
+        }
+
+        private void AddComponents( Dictionary<string, ComponentData> components, Entity entity ) {
+            // create and load data for all entity components
+            foreach ( KeyValuePair<string, ComponentData> componentTemplate in components ) {
+                Type componentType = Type.GetType( "XEngine." + componentTemplate.Key );
+                IEntityComponent component = (IEntityComponent)( System.Activator.CreateInstance( componentType, entity ) );
+                if ( componentTemplate.Value != null ) {
+                    component.LoadData( componentTemplate.Value );
+                }
+                entity.AddComponent( component );
+            }
         }
 
         static public void LoadEntityListTest() {

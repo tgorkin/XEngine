@@ -159,11 +159,11 @@ namespace XEngine {
             Entity entity2 = null;
             testGame.InitDelegate = delegate {
                 entity1 = new Entity();
-                AddSphereTestComponent( entity1 );
+                AddTestComponent( entity1, GeometricPrimitiveType.Sphere );
                 entity1.Initialize();
 
                 entity2 = new Entity();
-                AddCubeTestComponent( entity2 );
+                AddTestComponent( entity2, GeometricPrimitiveType.Cube );
                 entity2.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
@@ -173,28 +173,15 @@ namespace XEngine {
             testGame.Run();
         }
 
-        static public void AddSphereTestComponent( Entity entity ) {
+        static public void AddTestComponent( Entity entity, GeometricPrimitiveType primitiveType ) {
             EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
             transform.Value = new Transform();
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity );
-            renderComponent.GeometricPrimitiveType = GeometricPrimitiveType.Sphere;
+            renderComponent.GeometricPrimitiveType = primitiveType;
             renderComponent.Color = Color.Green;
             renderComponent.Wireframe = false;
-            entity.AddComponent( renderComponent );
-        }
-
-        static public void AddCubeTestComponent( Entity entity ) {
-            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
-            transform.Value = new Transform();
-            transform.Value.Position = new Vector3( 1.0f, 0, 0 );
-            entity.AddAttribute( Attributes.TRANSFORM, transform );
-
-            PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity );
-            renderComponent.GeometricPrimitiveType = GeometricPrimitiveType.Cube;
-            renderComponent.Color = Color.LightBlue;
-            renderComponent.Wireframe = true;
             entity.AddComponent( renderComponent );
         }
     }
