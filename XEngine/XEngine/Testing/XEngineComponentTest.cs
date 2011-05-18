@@ -46,6 +46,7 @@ namespace XEngine {
         }
 
         protected override void Initialize() {
+
             if ( m_setupDefaultComponents ) {
 
                 // Initialize Camera
@@ -61,9 +62,6 @@ namespace XEngine {
                 // Initialize CameraController
                 this.Components.Add( new CameraController( this ) );
 
-                // Initialize DebugHUD
-                this.Components.Add( new DebugHUD( this ) );
-
                 // Initialize EntityManager
                 EntityManager entityManager = new EntityManager( this );
                 this.Components.Add( entityManager );
@@ -73,6 +71,10 @@ namespace XEngine {
                 ScenegraphManager scenegraph = new ScenegraphManager( this );
                 this.Components.Add( scenegraph );
                 ServiceLocator.ScenegraphManager = scenegraph;
+
+                // Initialize DebugHUD
+                DebugHUD debugHUD = new DebugHUD( this );
+                this.Components.Add( new DebugHUD( this ) );
             }
 
             base.Initialize();
@@ -91,10 +93,11 @@ namespace XEngine {
         }
 
         protected override void Draw(GameTime gameTime) {
-            base.Draw(gameTime);
+            //base.Draw(gameTime);
             if (m_drawDelegate != null) {
                 m_drawDelegate(gameTime);
             }
+            base.Draw( gameTime );
         }
     }
 }

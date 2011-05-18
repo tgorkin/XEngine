@@ -17,8 +17,8 @@ namespace XEngine {
             m_entityFactory = new EntityFactory();
         }
 
-        public void LoadEntityTemplates( string entityTemplates ) {
-            m_entityFactory.LoadEntityTemplates( entityTemplates );
+        public EntityFactory EntityFactory {
+            get { return m_entityFactory; }
         }
 
         public void LoadLevel(string levelFile) {
@@ -46,7 +46,7 @@ namespace XEngine {
             LevelManager levelManager;
             testGame.InitDelegate = delegate {
                 levelManager = new LevelManager();
-                levelManager.LoadEntityTemplates( "Data/EntityTemplates" );
+                levelManager.EntityFactory.LoadEntityTemplates( "Data/EntityTemplates" );
                 levelManager.LoadLevel( "Data/Level_Test" );
             };
             testGame.Run();

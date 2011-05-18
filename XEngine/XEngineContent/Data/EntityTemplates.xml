@@ -4,6 +4,23 @@
             xmlns:Generic="System.Collections.Generic">
   <Asset Type="XEngineTypes.EntityDictionary">
     <Item>
+      <Key>Grid</Key>
+      <Value>
+        <Attribute>
+          <Key>Transform</Key>
+          <Value Type="XEngineTypes.Transform">
+            <Scale>0.1 0.1 0.1</Scale>
+          </Value>
+        </Attribute>
+        <Component>
+          <Key>ModelRenderComponent</Key>
+          <Value Type="XEngineTypes.ModelRenderData">
+            <Model>Models/Grid</Model>
+          </Value>
+        </Component>
+      </Value>
+    </Item>
+    <Item>
       <Key>Ship</Key>
       <Value>
         <Attribute>

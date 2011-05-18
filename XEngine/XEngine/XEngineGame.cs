@@ -15,11 +15,13 @@ namespace XEngine {
     /// </summary>
     public class XEngineGame : Microsoft.Xna.Framework.Game {
 
-        private GraphicsDeviceManager m_graphics;
+        protected GraphicsDeviceManager m_graphics;
 
         public XEngineGame() {
             m_graphics = new GraphicsDeviceManager( this );
             Content.RootDirectory = "Content";
+            m_graphics.PreferredBackBufferWidth = 1280;
+            m_graphics.PreferredBackBufferHeight = 720;
             ServiceLocator.Initialize( this );
         }
 

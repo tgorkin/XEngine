@@ -5,8 +5,19 @@
   <Asset Type="XEngineTypes.LevelData">
     <Entities>
       <Entity>
+        <Name>Grid</Name>
+        <Template>Grid</Template>
+      </Entity>
+      <Entity>
         <Name>Ship_1</Name>
         <Template>Ship</Template>
+        <Attribute>
+          <Key>Transform</Key>
+          <Value Type="XEngineTypes.Transform">
+            <Position>0.0 1.0 0</Position>
+            <Scale>0.001 0.001 0.001</Scale>
+          </Value>
+        </Attribute>
       </Entity>
       <Entity>
         <Name>Ship_2</Name>
@@ -14,7 +25,7 @@
         <Attribute>
           <Key>Transform</Key>
           <Value Type="XEngineTypes.Transform">
-            <Position>2.0 0 0</Position>
+            <Position>2.0 1.0 0</Position>
             <Scale>0.001 0.001 0.001</Scale>
           </Value>
         </Attribute>

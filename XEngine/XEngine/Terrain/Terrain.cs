@@ -159,7 +159,6 @@ namespace XEngine {
                     terrain = testGame.Content.Load<Terrain>( "HeightMaps\\testheightmap" );
                     terrain.ScaleTerrain(5.0f, -2.0f, 0.5f);
                     terrain.LoadTexture("grass", 10);
-                    //testGame.BindGameComponent( terrain );
                };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
                 terrain.Draw();

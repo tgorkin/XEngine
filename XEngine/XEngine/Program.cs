@@ -12,6 +12,7 @@ namespace XEngine {
 
             //InputManager.ComponentTest();
             //CameraController.ComponentTest();
+            //FirstPersonCameraController.ComponentTest();
 
             //Terrain.TestTerrain();
 

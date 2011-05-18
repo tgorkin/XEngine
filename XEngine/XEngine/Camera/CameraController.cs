@@ -13,9 +13,13 @@ namespace XEngine {
 
         private static readonly float CAMERA_ROTATION_SPEED = 1.5f;
 
-        ICamera m_camera;
+        private static readonly Vector3 INITIAL_POSITION = new Vector3( 0, 2.0f, 4.0f );
 
-        IInputManager m_inputManager;
+        private static readonly Vector3 INITIAL_LOOK_DIR = new Vector3( 0 );
+
+        protected ICamera m_camera;
+
+        protected IInputManager m_inputManager;
 
         public CameraController(XEngineGame game)
             : base(game) {
@@ -24,6 +28,7 @@ namespace XEngine {
         public override void Initialize() {
             m_camera = ServiceLocator.Camera;
             m_inputManager = ServiceLocator.InputManager;
+            SetupInitialCamera();
         }
 
         public override void Update(GameTime gameTime) {
@@ -39,8 +44,13 @@ namespace XEngine {
                 m_camera.LookAt += moveDirection;
             }
         }
+
+        virtual protected void SetupInitialCamera() {
+            m_camera.Position = INITIAL_POSITION;
+            m_camera.LookAt = INITIAL_LOOK_DIR;
+        }
         
-        private Vector3 getMoveDirection() {
+        virtual protected Vector3 getMoveDirection() {
             Vector3 moveDirection = new Vector3();
 
             // check for input from WASD keys
@@ -77,7 +87,7 @@ namespace XEngine {
             }
         }
 
-        private Quaternion GetRotation() {
+        virtual protected Quaternion GetRotation() {
             Quaternion rotation = new Quaternion();
             if ( m_inputManager.isMouseRightDown() ) {
                 Vector2 mouseMovement = m_inputManager.getMouseMove();
@@ -94,7 +104,7 @@ namespace XEngine {
             return rotation;
         }
 
-        private float convertPixelsToRadians(float pixelDelta, int maxPixels) {
+        protected float convertPixelsToRadians(float pixelDelta, int maxPixels) {
             // approximation
             return pixelDelta / maxPixels;
         }
