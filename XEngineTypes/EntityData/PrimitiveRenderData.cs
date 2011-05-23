@@ -16,6 +16,9 @@ namespace XEngineTypes {
 
         [ContentSerializer( Optional = true )]
         public bool Wireframe = false;
+
+        [ContentSerializer( Optional = true )]
+        public float Size = 1.0f;
     }
 
 }

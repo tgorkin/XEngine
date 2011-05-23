@@ -11,21 +11,15 @@ namespace XEngine {
 
         private GeometricPrimitiveType m_primitiveType;
 
-        private Color m_color = Color.White;
-
-        private bool m_wireframe;
-
         private EntityAttribute<Transform> m_transform;
 
         private GeometricPrimitive m_primitive;
 
-        private VertexBuffer m_vertexBuffer;
+        private Color m_color;
 
-        private IndexBuffer m_indexBuffer;
+        private bool m_wireframe;
 
-        private BasicEffect m_basicEffect;
-
-        private RasterizerState m_rasterizerState;
+        private float m_size = 1.0f;
 
         public PrimitiveRenderComponent( Entity entity)
             : base( entity ) {
@@ -35,43 +29,28 @@ namespace XEngine {
             Dispose();
         }
 
-        /// <summary>
-        /// Frees resources used by this object.
-        /// </summary>
         private void Dispose() {
-            if ( m_vertexBuffer != null )
-                m_vertexBuffer.Dispose();
-
-            if ( m_indexBuffer != null )
-                m_indexBuffer.Dispose();
-
-            if ( m_basicEffect != null )
-                m_basicEffect.Dispose();
-        }
-
-
-        public Color Color {
-            set { m_color = value; }
+            m_primitive.Dispose();
         }
 
         public GeometricPrimitiveType GeometricPrimitiveType {
             set { m_primitiveType = value; }
         }
 
-        public bool Wireframe {
-            set {
-                m_wireframe = value;
-                ToggleWireframe( m_wireframe );
+        public Color Color {
+            set { 
+                m_color = value;
+                if ( m_primitive != null ) {
+                    m_primitive.Color = m_color;
+                }
             }
         }
 
-        private void ToggleWireframe(bool wireframeOn) {
-            if ( m_rasterizerState != null ) {
-                if ( wireframeOn ) {
-                    m_rasterizerState.FillMode = FillMode.WireFrame;
-                    m_rasterizerState.CullMode = CullMode.None;
-                } else {
-                    m_rasterizerState.FillMode = FillMode.Solid;
+        public bool Wireframe {
+            set {
+                m_wireframe = value;
+                if ( m_primitive != null ) {
+                    m_primitive.Color = m_color;
                 }
             }
         }
@@ -80,77 +59,29 @@ namespace XEngine {
             PrimitiveRenderData data = componentData as PrimitiveRenderData;
             if ( data != null ) {
                 this.GeometricPrimitiveType = data.PrimitiveType;
-                this.Color = data.Color;
+                this.m_color = data.Color;
                 this.Wireframe = data.Wireframe;
+                this.m_size = data.Size;
             }
         }
 
         override public void Initialize() {
-            m_primitive = GeometricPrimitive.Factory( this.m_primitiveType );
-            InitializeBuffers();
+            m_primitive = GeometricPrimitive.Factory( this.m_primitiveType, m_size );
             m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
-            m_basicEffect = new BasicEffect( ServiceLocator.Graphics );
-            m_rasterizerState = new RasterizerState();
-            ToggleWireframe( m_wireframe );
+            m_primitive.Color = m_color;
+            m_primitive.Wireframe = m_wireframe;
+            m_primitive.Initialize();
         }
 
         override public void Draw( GameTime gameTime ) {
-            ICamera camera = ServiceLocator.Camera;
-
-            Matrix world;
+            Matrix world = Matrix.Identity;
             if ( m_transform != null ) {
                 world = m_transform.Value.World;
-            } else {
-                world = Matrix.Identity;
             }
-
-            // Set BasicEffect parameters.
-            m_basicEffect.World = world;
-            m_basicEffect.View = camera.View;
-            m_basicEffect.Projection = camera.Projection;
-            m_basicEffect.DiffuseColor = m_color.ToVector3();
-            m_basicEffect.Alpha = m_color.A / 255.0f;
-            m_basicEffect.EnableDefaultLighting();
-
-            GraphicsDevice graphicsDevice = m_basicEffect.GraphicsDevice;
-            graphicsDevice.DepthStencilState = DepthStencilState.Default;
-
-            if ( m_color.A < 255 ) {
-                // Set renderstate for alpha blended rendering
-                graphicsDevice.BlendState = BlendState.AlphaBlend;
-            } else {
-                // Set renderstate for opaque rendering
-                graphicsDevice.BlendState = BlendState.Opaque;
-            }
-            // Set our vertex declaration, vertex buffer, and index buffer.
-            graphicsDevice.SetVertexBuffer( m_vertexBuffer );
-            graphicsDevice.Indices = m_indexBuffer;
-            graphicsDevice.RasterizerState = m_rasterizerState;
-
-            foreach ( EffectPass effectPass in m_basicEffect.CurrentTechnique.Passes ) {
-                effectPass.Apply();
-
-                graphicsDevice.DrawIndexedPrimitives( PrimitiveType.TriangleList, 0, 0, m_primitive.VertexCount, 0, m_primitive.PrimitiveCount );
-
-            }
+            m_primitive.Draw( gameTime, world );
         }
 
-        private void InitializeBuffers() {
-            GraphicsDevice graphicsDevice = ServiceLocator.Graphics;
-            if ( graphicsDevice != null && m_primitive != null) {
 
-                // Create a vertex buffer, and copy our vertex data into it.
-                m_vertexBuffer = new VertexBuffer( graphicsDevice, VertexPositionNormal.VertexDeclaration, m_primitive.VertexCount, BufferUsage.None );
-                m_vertexBuffer.SetData( m_primitive.Vertices.ToArray() );
-
-                // Create an index buffer, and copy our index data into it.
-                m_indexBuffer = new IndexBuffer( graphicsDevice, typeof( ushort ), m_primitive.IndexCount, BufferUsage.None );
-                m_indexBuffer.SetData( m_primitive.Indices.ToArray() );
-
-                // Create a BasicEffect, which will be used to render the primitive.
-                m_basicEffect = new BasicEffect( graphicsDevice );
-            }
-        }
 
         static public void ComponentTest() {
             XEngineComponentTest testGame = new XEngineComponentTest();
@@ -159,11 +90,14 @@ namespace XEngine {
             Entity entity2 = null;
             testGame.InitDelegate = delegate {
                 entity1 = new Entity();
-                AddTestComponent( entity1, GeometricPrimitiveType.Sphere );
+                AddTestComponent( entity1, GeometricPrimitiveType.Sphere, 2.0f );
                 entity1.Initialize();
 
                 entity2 = new Entity();
-                AddTestComponent( entity2, GeometricPrimitiveType.Cube );
+                AddTestComponent( entity2, GeometricPrimitiveType.Cube, 1.0f );
+                EntityAttribute<Transform> transform = entity2.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
+                transform.Value.Position = new Vector3( 5.0f, 0, 0 );
+                transform.Value.UpdateWorld(null);
                 entity2.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
@@ -173,15 +107,16 @@ namespace XEngine {
             testGame.Run();
         }
 
-        static public void AddTestComponent( Entity entity, GeometricPrimitiveType primitiveType ) {
+        static public void AddTestComponent( Entity entity, GeometricPrimitiveType primitiveType, float size ) {
             EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
             transform.Value = new Transform();
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity );
             renderComponent.GeometricPrimitiveType = primitiveType;
-            renderComponent.Color = Color.Green;
+            renderComponent.Color = Color.LimeGreen;
             renderComponent.Wireframe = false;
+            renderComponent.m_size = size;
             entity.AddComponent( renderComponent );
         }
     }

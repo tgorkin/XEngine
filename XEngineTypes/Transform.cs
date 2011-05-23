@@ -63,7 +63,11 @@ namespace XEngineTypes {
         }
 
         public void UpdateWorld(Transform parent) {
-            m_world = Local * parent.World;
+            if ( parent != null ) {
+                m_world = Local * parent.World;
+            } else {
+                m_world = Local;
+            }
         }
 
         public static Transform CreateFromType( TransformType type, float value ) {

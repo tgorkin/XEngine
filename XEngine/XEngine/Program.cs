@@ -13,7 +13,7 @@ namespace XEngine {
             //InputManager.ComponentTest();
             //CameraController.ComponentTest();
             //FirstPersonCameraController.ComponentTest();
-            TopDownCameraController.ComponentTest();
+            //TopDownCameraController.ComponentTest();
 
             //Terrain.TestTerrain();
 
@@ -25,7 +25,7 @@ namespace XEngine {
             //EntityFactory.LoadEntityListTest();
             //EntityFactory.EntityTest( "Ship" );
             //EntityFactory.EntityTest( "Tank" );
-            //EntityFactory.EntityTest( "Sphere" );
+            EntityFactory.EntityTest( "Sphere" );
 
             //LevelManager.LoadLevelData();
             //ScenegraphManager.ComponentTest();

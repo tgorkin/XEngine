@@ -67,8 +67,9 @@
           <Key>PrimitiveRenderComponent</Key>
           <Value Type="XEngineTypes.PrimitiveRenderData">
             <PrimitiveType>Sphere</PrimitiveType>
-            <Color>FF00FF00</Color>
+            <Color>FF00FFFF</Color>
             <Wireframe>false</Wireframe>
+            <Size>2.5</Size>
           </Value>
         </Component>
       </Value>

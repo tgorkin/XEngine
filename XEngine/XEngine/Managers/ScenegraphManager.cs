@@ -45,13 +45,13 @@ namespace XEngine {
                 scenegraph.Initialize();
 
                 entity1 = new Entity();
-                PrimitiveRenderComponent.AddTestComponent( entity1, GeometricPrimitiveType.Sphere );
+                PrimitiveRenderComponent.AddTestComponent( entity1, GeometricPrimitiveType.Sphere, 1.0f);
                 MoveComponent.AddTestComponent( entity1 );
                 entity1.Initialize();
                 scenegraph.AddEntity( entity1, null );
 
                 entity2 = new Entity();
-                PrimitiveRenderComponent.AddTestComponent( entity2, GeometricPrimitiveType.Cube );
+                PrimitiveRenderComponent.AddTestComponent( entity2, GeometricPrimitiveType.Cube, 1.0f );
                 entity2.Initialize();
                 Transform transform2 = ( entity2.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform> ).Value;
                 transform2.Position = new Vector3( 0, 1.0f, 0 );
@@ -60,7 +60,7 @@ namespace XEngine {
                 scenegraph.AddEntity( entity2, entity1 );
 
                 entity3 = new Entity();
-                PrimitiveRenderComponent.AddTestComponent( entity3, GeometricPrimitiveType.Cube );
+                PrimitiveRenderComponent.AddTestComponent( entity3, GeometricPrimitiveType.Cube, 1.0f );
                 entity3.Initialize();
                 Transform transform3 = ( entity3.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform> ).Value;
                 transform3.Position = new Vector3( 1.5f, 0, 0 );

@@ -24,7 +24,7 @@ namespace XEngine {
 
         private bool m_setupDefaultComponents = true;
 
-        private CameraType m_cameraType = CameraType.CAMERA_TYPE_TOP_DOWN;
+        private CameraType m_cameraType = CameraType.CAMERA_TYPE_FREE;
 
         public XEngineComponentTest() : base() {
             this.IsMouseVisible = true;
