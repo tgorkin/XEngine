@@ -12,7 +12,7 @@ namespace XEngine {
 
         private static readonly Vector3 INITIAL_LOOK_DIR = new Vector3( 0, 0, -1.0f );
 
-        public FirstPersonCameraController( XEngineGame game )
+        public FirstPersonCameraController( Game game )
             : base(game) {
         }
 
@@ -37,23 +37,17 @@ namespace XEngine {
         }
 
         new static public void ComponentTest() {
-            XEngineComponentTest testGame = new XEngineComponentTest( false );
+            XEngineComponentTest testGame = new XEngineComponentTest();
+            testGame.CameraType = CameraType.CAMERA_TYPE_FIRST_PERSON;
 
-            // Initialize Camera
-            Camera camera = new Camera( testGame );
-            testGame.Components.Add( camera );
-            ServiceLocator.Camera = camera;
-
-            // Initialize InputManager
-            InputManager inputManager = new InputManager( testGame );
-            testGame.Components.Add( inputManager );
-            ServiceLocator.InputManager = inputManager;
-
-            // Initialize DebugHUD
-            testGame.Components.Add( new DebugHUD( testGame ) );
-
-            testGame.Components.Add( new FirstPersonCameraController( testGame ) );
-
+            Origin origin = null;
+            testGame.InitDelegate = delegate {
+                origin = new Origin();
+                origin.Initialize();
+            };
+            testGame.DrawDelegate = delegate( GameTime gameTime ) {
+                origin.Draw( gameTime );
+            };
             testGame.Run();
         }
     }

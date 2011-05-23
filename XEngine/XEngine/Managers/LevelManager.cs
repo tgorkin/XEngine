@@ -42,6 +42,7 @@ namespace XEngine {
 
         static public void LoadLevelData() {
             XEngineComponentTest testGame = new XEngineComponentTest();
+            testGame.CameraType = CameraType.CAMERA_TYPE_TOP_DOWN;
 
             LevelManager levelManager;
             testGame.InitDelegate = delegate {

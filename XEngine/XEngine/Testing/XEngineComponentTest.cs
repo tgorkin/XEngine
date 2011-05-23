@@ -24,6 +24,8 @@ namespace XEngine {
 
         private bool m_setupDefaultComponents = true;
 
+        private CameraType m_cameraType = CameraType.CAMERA_TYPE_TOP_DOWN;
+
         public XEngineComponentTest() : base() {
             this.IsMouseVisible = true;
         }
@@ -45,6 +47,10 @@ namespace XEngine {
             set { m_drawDelegate = value; }
         }
 
+        public CameraType CameraType {
+            set { m_cameraType = value; }
+        }
+
         protected override void Initialize() {
 
             if ( m_setupDefaultComponents ) {
@@ -60,7 +66,7 @@ namespace XEngine {
                 ServiceLocator.InputManager = inputManager;
 
                 // Initialize CameraController
-                this.Components.Add( new CameraController( this ) );
+                this.Components.Add( CameraController.Factory( m_cameraType, this) );
 
                 // Initialize EntityManager
                 EntityManager entityManager = new EntityManager( this );
@@ -93,11 +99,10 @@ namespace XEngine {
         }
 
         protected override void Draw(GameTime gameTime) {
-            //base.Draw(gameTime);
+            base.Draw(gameTime);
             if (m_drawDelegate != null) {
                 m_drawDelegate(gameTime);
             }
-            base.Draw( gameTime );
         }
     }
 }

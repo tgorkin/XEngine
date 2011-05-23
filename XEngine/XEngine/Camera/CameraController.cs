@@ -21,7 +21,7 @@ namespace XEngine {
 
         protected IInputManager m_inputManager;
 
-        public CameraController(XEngineGame game)
+        public CameraController(Game game)
             : base(game) {
         }
 
@@ -111,6 +111,23 @@ namespace XEngine {
 
         private float getRotationSpeed() {
             return CAMERA_ROTATION_SPEED;
+        }
+
+        static public CameraController Factory( CameraType type, Game game ) {
+            CameraController cameraController = null;
+            switch ( type ) {
+                case CameraType.CAMERA_TYPE_FIRST_PERSON:
+                    cameraController = new FirstPersonCameraController( game );
+                    break;
+                case CameraType.CAMERA_TYPE_TOP_DOWN:
+                    cameraController = new TopDownCameraController( game );
+                    break;
+                case CameraType.CAMERA_TYPE_FREE:
+                default:
+                    cameraController = new CameraController( game );
+                    break;
+            }
+            return cameraController;
         }
 
         static public void ComponentTest() {

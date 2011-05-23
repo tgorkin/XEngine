@@ -5,8 +5,15 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace XEngine {
-    class CameraConstants {
 
+    public enum CameraType {
+        CAMERA_TYPE_FREE,
+        CAMERA_TYPE_FIRST_PERSON,
+        CAMERA_TYPE_TOP_DOWN
+    };
+
+    class CameraConstants {
+        
         static public readonly float NEAR_PLANE = 0.1f;
 
         static public readonly float FAR_PLANE = 1000f;

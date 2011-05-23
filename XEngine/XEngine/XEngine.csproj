@@ -113,6 +113,7 @@
     <Compile Include="Camera\CameraController.cs" />
     <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Camera\FirstPersonCameraController.cs" />
+    <Compile Include="Camera\TopDownCameraController.cs" />
     <Compile Include="Entity\Attributes\AttributeConstants.cs" />
     <Compile Include="Entity\Attributes\EntityAttribute.cs" />
     <Compile Include="Entity\Attributes\IEntityAttribute.cs" />
