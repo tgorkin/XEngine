@@ -19,10 +19,10 @@ namespace XEngine {
         }
 
         public void AddEntity( Entity entity, Entity parent ) {
-            Transform transform = ( entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform> ).Value;
+            Transform transform = entity.GetAttribute<Transform>( Attributes.TRANSFORM );
             ScenegraphNode node = new ScenegraphNode( transform );
             if ( parent != null ) {
-                Transform parentTransform = ( parent.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform> ).Value;
+                Transform parentTransform = parent.GetAttribute<Transform>( Attributes.TRANSFORM );
                 ScenegraphNode parentNode = m_root.FindByTransform( parentTransform );
                 if ( parentNode != null ) {
                     parentNode.AddChild( node );
@@ -53,7 +53,7 @@ namespace XEngine {
                 entity2 = new Entity();
                 PrimitiveRenderComponent.AddTestComponent( entity2, GeometricPrimitiveType.Cube, 1.0f );
                 entity2.Initialize();
-                Transform transform2 = ( entity2.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform> ).Value;
+                Transform transform2 = entity2.GetAttribute<Transform>( Attributes.TRANSFORM );
                 transform2.Position = new Vector3( 0, 1.0f, 0 );
                 transform2.Rotation = Matrix.CreateRotationY( MathHelper.PiOver4 );
                 transform2.Scale = new Vector3( 0.5f );
@@ -62,7 +62,7 @@ namespace XEngine {
                 entity3 = new Entity();
                 PrimitiveRenderComponent.AddTestComponent( entity3, GeometricPrimitiveType.Cube, 1.0f );
                 entity3.Initialize();
-                Transform transform3 = ( entity3.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform> ).Value;
+                Transform transform3 = entity3.GetAttribute<Transform>( Attributes.TRANSFORM );
                 transform3.Position = new Vector3( 1.5f, 0, 0 );
                 scenegraph.AddEntity( entity3, entity2 );
 

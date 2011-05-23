@@ -33,9 +33,8 @@ namespace XEngine {
         private void AddAttributes( Dictionary<string, object> attributes, Entity entity ) {
             // create and load data for all entity attributes
             foreach ( KeyValuePair<string, object> attributeData in attributes ) {
-                Type attributeDataType = Type.GetType( "XEngine.EntityAttribute`1" ).MakeGenericType( attributeData.Value.GetType() );
-                IEntityAttribute attribute = (IEntityAttribute)( System.Activator.CreateInstance( attributeDataType, attributeData.Value ) );
-                entity.AddAttribute( attributeData.Key, attribute );
+                // TODO: make sure these attributes are deep copied
+                entity.AddAttribute( attributeData.Key, attributeData.Value );
             }
         }
 
@@ -73,6 +72,10 @@ namespace XEngine {
             };
             testGame.UpdateDelegate = delegate( GameTime gameTime ) {
                 entity.Update( gameTime );
+                Transform transform = entity.GetAttribute<Transform>( Attributes.TRANSFORM );
+                if ( transform != null ) {
+                    transform.UpdateWorld( null );
+                }
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
                 entity.Draw( gameTime );

@@ -12,7 +12,7 @@ namespace XEngine {
 
         private static readonly string COMPONENT_DATA_PERIOD = "Period";
 
-        private EntityAttribute<Transform> m_transform;
+        private Transform m_transform;
 
         public float Radius { get; set; }
 
@@ -21,17 +21,17 @@ namespace XEngine {
         public OrbitComponent( Entity entity ) : base( entity ) { }
 
         override public void Initialize() {
-            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
+            m_transform = this.Entity.GetAttribute<Transform>( Attributes.TRANSFORM );
         }
 
         override public void Update( GameTime gameTime ) {
-            Vector3 origPostion = m_transform.Value.Position;
+            Vector3 origPostion = m_transform.Position;
             float cycleProgress = (float)gameTime.TotalGameTime.TotalMilliseconds / Period;
 
             origPostion.X = (float)Math.Cos( cycleProgress ) * Radius;
             origPostion.Y = (float)Math.Sin( cycleProgress ) * Radius;
 
-            m_transform.Value.Position = origPostion;
+            m_transform.Position = origPostion;
         }
 
         /*override public void LoadFromTemplate( ComponentTemplate componentTemplate ) {

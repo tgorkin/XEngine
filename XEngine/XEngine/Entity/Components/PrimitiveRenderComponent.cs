@@ -11,7 +11,7 @@ namespace XEngine {
 
         private GeometricPrimitiveType m_primitiveType;
 
-        private EntityAttribute<Transform> m_transform;
+        private Transform m_transform;
 
         private GeometricPrimitive m_primitive;
 
@@ -67,7 +67,7 @@ namespace XEngine {
 
         override public void Initialize() {
             m_primitive = GeometricPrimitive.Factory( this.m_primitiveType, m_size );
-            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
+            m_transform = this.Entity.GetAttribute<Transform>( Attributes.TRANSFORM );
             m_primitive.Color = m_color;
             m_primitive.Wireframe = m_wireframe;
             m_primitive.Initialize();
@@ -76,7 +76,7 @@ namespace XEngine {
         override public void Draw( GameTime gameTime ) {
             Matrix world = Matrix.Identity;
             if ( m_transform != null ) {
-                world = m_transform.Value.World;
+                world = m_transform.World;
             }
             m_primitive.Draw( gameTime, world );
         }
@@ -95,9 +95,9 @@ namespace XEngine {
 
                 entity2 = new Entity();
                 AddTestComponent( entity2, GeometricPrimitiveType.Cube, 1.0f );
-                EntityAttribute<Transform> transform = entity2.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
-                transform.Value.Position = new Vector3( 5.0f, 0, 0 );
-                transform.Value.UpdateWorld(null);
+                Transform transform = entity2.GetAttribute<Transform>( Attributes.TRANSFORM );
+                transform.Position = new Vector3( 5.0f, 0, 0 );
+                transform.UpdateWorld(null);
                 entity2.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
@@ -108,8 +108,7 @@ namespace XEngine {
         }
 
         static public void AddTestComponent( Entity entity, GeometricPrimitiveType primitiveType, float size ) {
-            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
-            transform.Value = new Transform();
+            Transform transform = new Transform();
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             PrimitiveRenderComponent renderComponent = new PrimitiveRenderComponent( entity );

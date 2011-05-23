@@ -13,7 +13,7 @@ namespace XEngine {
 
         protected Model m_model;
 
-        private EntityAttribute<Transform> m_transform;
+        private Transform m_transform;
 
         protected Matrix[] m_absoluteBoneTransforms;
 
@@ -37,7 +37,7 @@ namespace XEngine {
         }
 
         override public void Initialize() {
-            m_transform = this.Entity.GetAttribute( Attributes.TRANSFORM ) as EntityAttribute<Transform>;
+            m_transform = this.Entity.GetAttribute<Transform>( Attributes.TRANSFORM );
             m_model = ServiceLocator.Content.Load<Model>( m_modelName );
             m_absoluteBoneTransforms = new Matrix[m_model.Bones.Count];
             
@@ -47,7 +47,7 @@ namespace XEngine {
             ICamera camera = ServiceLocator.Camera;
             Matrix world;
             if ( m_transform != null ) {
-                world = m_transform.Value.World;
+                world = m_transform.World;
             } else {
                 world = Matrix.Identity;
             }
@@ -89,9 +89,8 @@ namespace XEngine {
 
         static public void AddShipTestComponent(Entity entity) {
             // Setup a position and scale attribute
-            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
-            transform.Value = new Transform();
-            transform.Value.Scale = new Vector3(0.001f);
+            Transform transform = new Transform();
+            transform.Scale = new Vector3( 0.001f );
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             // Add a model render component
@@ -102,10 +101,9 @@ namespace XEngine {
 
         static public void AddGridTestComponent( Entity entity ) {
             // Setup a position and scale attribute
-            EntityAttribute<Transform> transform = new EntityAttribute<Transform>();
-            transform.Value = new Transform();
-            transform.Value.Position = new Vector3( 0, -0.5f, 0 );
-            transform.Value.Scale = new Vector3( 0.1f );
+            Transform transform = new Transform();
+            transform.Position = new Vector3( 0, -0.5f, 0 );
+            transform.Scale = new Vector3( 0.1f );
             entity.AddAttribute( Attributes.TRANSFORM, transform );
 
             // Add a model render component

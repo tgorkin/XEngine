@@ -25,9 +25,9 @@ namespace XEngine {
             //EntityFactory.LoadEntityListTest();
             //EntityFactory.EntityTest( "Ship" );
             //EntityFactory.EntityTest( "Tank" );
-            EntityFactory.EntityTest( "Sphere" );
+            //EntityFactory.EntityTest( "Sphere" );
 
-            //LevelManager.LoadLevelData();
+            LevelManager.LoadLevelData();
             //ScenegraphManager.ComponentTest();
 
             //Origin.ComponentTest();

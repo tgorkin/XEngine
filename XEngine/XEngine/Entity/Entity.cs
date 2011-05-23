@@ -10,7 +10,7 @@ namespace XEngine {
 
         private List<IEntityComponent> m_components = new List<IEntityComponent>();
 
-        private Dictionary<string, IEntityAttribute> m_attributes = new Dictionary<string, IEntityAttribute>();
+        private Dictionary<string, object> m_attributes = new Dictionary<string, object>();
 
         public List<IEntityComponent> Components {
             get { return m_components; }
@@ -32,15 +32,18 @@ namespace XEngine {
             return result;
         }
 
-        public IEntityAttribute GetAttribute( string attributeName ) {
-            IEntityAttribute result = null;
+        public T GetAttribute<T>( string attributeName ) {
+            T result = default(T);
             if ( m_attributes.ContainsKey( attributeName ) ) {
-                result = m_attributes[attributeName];
+                var attribute = m_attributes[attributeName];
+                if ( attribute.GetType() == typeof(T) ) {
+                    result = (T)attribute;
+                }
             }
             return result;
         }
 
-        public void AddAttribute( string attributeName, IEntityAttribute attribute ) {
+        public void AddAttribute( string attributeName, object attribute ) {
             m_attributes[attributeName] = attribute;
         }
 
