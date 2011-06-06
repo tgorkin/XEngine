@@ -7,13 +7,13 @@ using Microsoft.Xna.Framework;
 namespace XEngine {
     class Sphere : GeometricPrimitive {
 
-        private float m_diameter;
+        private float m_radius;
 
         private int m_tessellation;
 
-        public Sphere( float diameter, int tessellation ) {
-                m_diameter = diameter;
-                m_tessellation = tessellation;
+        public Sphere( float radius, int tessellation ) {
+            m_radius = radius;
+            m_tessellation = tessellation;
         }
 
         protected override void GenerateGeometry() {
@@ -23,10 +23,8 @@ namespace XEngine {
             int verticalSegments = m_tessellation;
             int horizontalSegments = m_tessellation * 2;
 
-            float radius = m_diameter / 2;
-
             // Start with a single vertex at the bottom of the sphere.
-            AddVertex( Vector3.Down * radius, Vector3.Down );
+            AddVertex( Vector3.Down * m_radius, Vector3.Down );
 
             // Create rings of vertices at progressively higher latitudes.
             for ( int i = 0; i < verticalSegments - 1; i++ ) {
@@ -45,12 +43,12 @@ namespace XEngine {
 
                     Vector3 normal = new Vector3( dx, dy, dz );
 
-                    AddVertex( normal * radius, normal );
+                    AddVertex( normal * m_radius, normal );
                 }
             }
 
             // Finish with a single vertex at the top of the sphere.
-            AddVertex( Vector3.Up * radius, Vector3.Up );
+            AddVertex( Vector3.Up * m_radius, Vector3.Up );
 
             // Create a fan connecting the bottom vertex to the bottom latitude ring.
             for ( int i = 0; i < horizontalSegments; i++ ) {

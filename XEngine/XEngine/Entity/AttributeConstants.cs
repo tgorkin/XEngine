@@ -9,5 +9,7 @@ namespace XEngine {
         public static readonly string TRANSFORM = "Transform";
 
         public static readonly string VELOCITY = "Velocity";
+
+        public static readonly string BOUNDING_SPHERE = "BoundingSphere";
     }
 }

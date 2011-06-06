@@ -81,6 +81,9 @@ namespace XEngine {
                 // Initialize DebugHUD
                 DebugHUD debugHUD = new DebugHUD( this );
                 this.Components.Add( new DebugHUD( this ) );
+
+                // Initialize SettingsManager
+                ServiceLocator.SettingsManager = new SettingsManager();
             }
 
             base.Initialize();

@@ -46,7 +46,7 @@ namespace XEngine {
                 origin.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
-                origin.Draw( gameTime );
+                origin.Draw();
             };
             testGame.Run();
         }

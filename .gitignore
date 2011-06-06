@@ -3,3 +3,6 @@
 *.suo
 *.user
 *.tmp
+ArtAssets/tmp
+XEngineContent/cachefile-*
+Thumbs.db

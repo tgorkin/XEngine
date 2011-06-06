@@ -9,13 +9,26 @@
         <Attribute>
           <Key>Transform</Key>
           <Value Type="XEngineTypes.Transform">
-            <Scale>0.1 0.1 0.1</Scale>
           </Value>
         </Attribute>
         <Component>
           <Key>ModelRenderComponent</Key>
           <Value Type="XEngineTypes.ModelRenderData">
             <Model>Models/Grid</Model>
+            <Transform>
+              <Scale>0.1 0.1 0.1</Scale>
+            </Transform>
+          </Value>
+        </Component>
+      </Value>
+    </Item>
+    <Item>
+      <Key>TestModel</Key>
+      <Value>
+        <Component>
+          <Key>ModelRenderComponent</Key>
+          <Value Type="XEngineTypes.ModelRenderData">
+            <Model>Models/TestModel</Model>
           </Value>
         </Component>
       </Value>
@@ -26,7 +39,7 @@
         <Attribute>
           <Key>Transform</Key>
           <Value Type="XEngineTypes.Transform">
-            <Scale>0.001 0.001 0.001</Scale>
+            <Position>0 1 0</Position>
           </Value>
         </Attribute>
         <Attribute>
@@ -37,6 +50,9 @@
           <Key>ModelRenderComponent</Key>
           <Value Type="XEngineTypes.ModelRenderData">
             <Model>Models/Ship</Model>
+            <Transform>
+              <Scale>0.001 0.001 0.001</Scale>
+            </Transform>
           </Value>
         </Component>
       </Value>
@@ -57,6 +73,10 @@
             <TransformType>RotationY</TransformType>
             <Speed>0.05</Speed>
           </Value>
+        </Component>
+        <Component>
+          <Key>SelectionCubeComponent</Key>
+          <Value></Value>
         </Component>
       </Value>
     </Item>

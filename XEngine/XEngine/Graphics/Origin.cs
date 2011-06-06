@@ -14,13 +14,14 @@ namespace XEngine {
 
         private BasicEffect m_basicEffect;
 
-        public Transform Transform = new Transform();
+        private Matrix m_localTransform;
 
         private float m_size;
 
         public Origin( float size ) 
             : base() {
-            m_size = size;
+                m_localTransform = Matrix.Identity;
+                m_size = size;
         }
 
         public Origin( )
@@ -37,10 +38,14 @@ namespace XEngine {
             m_basicEffect = new BasicEffect( ServiceLocator.Graphics );
         }
 
-        public void Draw( GameTime gameTime ) {
+        public void Draw() {
+            this.Draw( Matrix.Identity );
+        }
+
+        public void Draw( Matrix worldTransform ) {
             ICamera camera = ServiceLocator.Camera;
 
-            m_basicEffect.World = Transform.World;
+            m_basicEffect.World = m_localTransform * worldTransform;
             m_basicEffect.View = camera.View;
             m_basicEffect.Projection = camera.Projection;
             m_basicEffect.VertexColorEnabled = true;
@@ -65,7 +70,7 @@ namespace XEngine {
                 origin.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
-                origin.Draw( gameTime );
+                origin.Draw( Matrix.Identity );
             };
             testGame.Run();
         }

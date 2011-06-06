@@ -120,21 +120,28 @@
     <Compile Include="Entity\Components\PrimitiveRenderComponent.cs" />
     <Compile Include="Entity\Components\ModelBoneControllerComponent.cs" />
     <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Graphics\BoundingBoxPrimitive.cs" />
+    <Compile Include="Graphics\BoundingSpherePrimitive.cs" />
     <Compile Include="Entity\EntityFactory.cs" />
     <Compile Include="Entity\Components\IEntityComponent.cs" />
     <Compile Include="Entity\Components\MoveComponent.cs" />
     <Compile Include="Entity\Components\ModelRenderComponent.cs" />
+    <Compile Include="Graphics\BoundingVolumePrimitive.cs" />
     <Compile Include="Graphics\Cube.cs" />
+    <Compile Include="Graphics\DebugShapeRenderer.cs" />
     <Compile Include="Graphics\GeometricPrimitive.cs" />
     <Compile Include="Graphics\Origin.cs" />
+    <Compile Include="Entity\Components\SelectionCubeComponent.cs" />
     <Compile Include="Graphics\Sphere.cs" />
     <Compile Include="Graphics\VertexPositionNormal.cs" />
+    <Compile Include="Graphics\XEngineModel.cs" />
     <Compile Include="Managers\EntityManager.cs" />
     <Compile Include="Managers\IInputManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\LevelManager.cs" />
     <Compile Include="Managers\ScenegraphManager.cs" />
     <Compile Include="Managers\ScenegraphNode.cs" />
+    <Compile Include="Managers\SettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ServiceLocator.cs" />
@@ -143,7 +150,9 @@
     <Compile Include="Testing\ComponentTests.cs" />
     <Compile Include="Testing\DebugHUD.cs" />
     <Compile Include="Testing\XEngineComponentTest.cs" />
+    <Compile Include="Utils\ModelUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\VectorUtils.cs" />
     <Compile Include="Utils\VertexUtils.cs" />
     <Compile Include="XEngineGame.cs" />
   </ItemGroup>
@@ -161,8 +170,9 @@
       <Name>XEngineTypes</Name>
     </ProjectReference>
     <ProjectReference Include="..\XEngineContent\XEngineContent.contentproj">
-      <Name>XEngineContent</Name>
+      <Name>XEngineContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{CFE79A95-8961-4370-BFC6-D4E47AC62424}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

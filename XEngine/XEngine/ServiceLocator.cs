@@ -23,6 +23,8 @@ namespace XEngine {
 
         private ScenegraphManager m_scenegraphManager;
 
+        private SettingsManager m_settingsManager;
+
         private ServiceLocator() { }
 
         static public void Initialize( Game game ) {
@@ -57,6 +59,11 @@ namespace XEngine {
         static public ScenegraphManager ScenegraphManager {
             get { return m_instance.m_scenegraphManager; }
             set { m_instance.m_scenegraphManager = value; }
+        }
+
+        static public SettingsManager SettingsManager {
+            get { return m_instance.m_settingsManager; }
+            set { m_instance.m_settingsManager = value; }
         }
     }
 

@@ -11,14 +11,15 @@ namespace XEngine {
 
         private string m_modelName;
 
-        protected Model m_model;
+        private XEngineModel m_model;
 
-        private Transform m_transform;
+        private Transform m_entityTransform;
 
-        protected Matrix[] m_absoluteBoneTransforms;
+        private Transform m_localTransform;
 
         public ModelRenderComponent( Entity entity )
             : base( entity ) {
+                m_localTransform = new Transform();
         }
 
         public string ModelName {
@@ -26,45 +27,36 @@ namespace XEngine {
         }
 
         public Model Model {
-            get { return m_model; }
+            get { return m_model.Model; }
         }
 
         override public void LoadData( ComponentData componentData ) {
             ModelRenderData data = componentData as ModelRenderData;
             if ( data != null ) {
                 m_modelName = data.Model;
+                m_localTransform = data.Transform;
             }
         }
 
         override public void Initialize() {
-            m_transform = this.Entity.GetAttribute<Transform>( Attributes.TRANSFORM );
-            m_model = ServiceLocator.Content.Load<Model>( m_modelName );
-            m_absoluteBoneTransforms = new Matrix[m_model.Bones.Count];
-            
+            m_model = new XEngineModel( m_modelName );
+            m_model.Initialize();
+            m_entityTransform = this.Entity.GetAttribute<Transform>( Attributes.TRANSFORM );
+
+            //BoundingSphere boundingSphere = ModelUtils.GetGlobalBoundingSphere( m_model );
+            //BoundingSphere boundingSphere = m_model.Meshes[1].BoundingSphere;
+            //boundingSphere = boundingSphere.Transform( m_localTransform.Local );
+            //this.Entity.AddAttribute( Attributes.BOUNDING_SPHERE, boundingSphere );
         }
 
         override public void Draw(GameTime gameTime) {
-            ICamera camera = ServiceLocator.Camera;
             Matrix world;
-            if ( m_transform != null ) {
-                world = m_transform.World;
+            if ( m_entityTransform != null ) {
+                world = m_localTransform.Local * m_entityTransform.World;
             } else {
-                world = Matrix.Identity;
+                world = m_localTransform.Local;
             }
-            m_model.CopyAbsoluteBoneTransformsTo( m_absoluteBoneTransforms );
-            foreach ( ModelMesh mesh in m_model.Meshes ) {
-                foreach ( BasicEffect effect in mesh.Effects ) {
-                    effect.EnableDefaultLighting();
-                    effect.GraphicsDevice.BlendState = BlendState.Opaque;
-                    effect.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-                    effect.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-
-                    effect.View = camera.View;
-                    effect.Projection = camera.Projection;
-                    effect.World = m_absoluteBoneTransforms[mesh.ParentBone.Index] * world;
-                }
-                mesh.Draw();
-            }
+            m_model.Draw( world );
         }
 
         static public void ComponentTest() {
@@ -74,10 +66,12 @@ namespace XEngine {
             Entity entity2 = null;
             testGame.InitDelegate = delegate {
                 entity1 = new Entity();
-                entity2 = new Entity();
                 AddShipTestComponent( entity1 );
-                AddGridTestComponent( entity2 );
+                entity1.AddAttribute( Attributes.TRANSFORM, new Transform( new Vector3( 0, 1.0f, 0 ) ) );
                 entity1.Initialize();
+
+                entity2 = new Entity();
+                AddGridTestComponent( entity2 );
                 entity2.Initialize();
             };
             testGame.DrawDelegate = delegate( GameTime gameTime ) {
@@ -88,28 +82,29 @@ namespace XEngine {
         }
 
         static public void AddShipTestComponent(Entity entity) {
-            // Setup a position and scale attribute
-            Transform transform = new Transform();
-            transform.Scale = new Vector3( 0.001f );
-            entity.AddAttribute( Attributes.TRANSFORM, transform );
+            ModelRenderComponent component = new ModelRenderComponent( entity );
 
-            // Add a model render component
-            ModelRenderComponent renderComponent = new ModelRenderComponent( entity );
-            renderComponent.ModelName = "Models/Ship";
-            entity.AddComponent( renderComponent );
+            ModelRenderData componentData = new ModelRenderData();
+            componentData.Model = "Models/Ship";
+            Transform modelTransform = new Transform();
+            modelTransform.Scale = new Vector3( 0.001f );
+            componentData.Transform = modelTransform;
+
+            component.LoadData( componentData );
+            entity.AddComponent( component );
         }
 
         static public void AddGridTestComponent( Entity entity ) {
-            // Setup a position and scale attribute
-            Transform transform = new Transform();
-            transform.Position = new Vector3( 0, -0.5f, 0 );
-            transform.Scale = new Vector3( 0.1f );
-            entity.AddAttribute( Attributes.TRANSFORM, transform );
+            ModelRenderComponent component = new ModelRenderComponent( entity );
 
-            // Add a model render component
-            ModelRenderComponent renderComponent = new ModelRenderComponent( entity );
-            renderComponent.ModelName = "Models/Grid";
-            entity.AddComponent( renderComponent );
+            ModelRenderData componentData = new ModelRenderData();
+            componentData.Model = "Models/Grid";
+            Transform modelTransform = new Transform();
+            modelTransform.Scale = new Vector3( 0.1f );
+            componentData.Transform = modelTransform;
+
+            component.LoadData( componentData );
+            entity.AddComponent( component );
         }
     }
 }

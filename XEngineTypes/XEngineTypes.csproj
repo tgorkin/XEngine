@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomMeshData.cs" />
     <Compile Include="EntityData\ComponentData.cs" />
     <Compile Include="EntityData\EntityInstance.cs" />
     <Compile Include="EntityData\EntityDictionary.cs" />

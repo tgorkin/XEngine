@@ -59,7 +59,7 @@
     <Compile Include="Models\Ship.fbx">
       <Name>Ship</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>CustomModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +77,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ModelPipeline\ModelPipeline.csproj">
+      <Project>{6F461101-77A3-4CCC-8D4B-05B18743F7A1}</Project>
+      <Name>ModelPipeline</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TerrainPipeline\TerrainPipeline.csproj">
       <Project>{B62736C6-A95D-4DC4-963C-180E65CD3356}</Project>
       <Name>TerrainPipeline</Name>
@@ -98,7 +102,7 @@
     <Compile Include="Models\Tank.fbx">
       <Name>Tank</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>CustomModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +111,13 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <SubType>Designer</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\TestModel.fbx">
+      <Name>TestModel</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>CustomModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

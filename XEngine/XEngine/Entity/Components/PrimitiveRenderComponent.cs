@@ -78,7 +78,7 @@ namespace XEngine {
             if ( m_transform != null ) {
                 world = m_transform.World;
             }
-            m_primitive.Draw( gameTime, world );
+            m_primitive.Draw( world );
         }
 
 

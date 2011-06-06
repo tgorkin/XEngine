@@ -101,7 +101,7 @@ namespace XEngine {
             }
         }
 
-        public void Draw( GameTime gameTime, Matrix world ) {
+        public void Draw(Matrix world ) {
             ICamera camera = ServiceLocator.Camera;
 
             // Set BasicEffect parameters.
@@ -124,6 +124,7 @@ namespace XEngine {
             // Set our vertex declaration, vertex buffer, and index buffer.
             graphicsDevice.SetVertexBuffer( m_vertexBuffer );
             graphicsDevice.Indices = m_indexBuffer;
+            RasterizerState prevRasterizerState = graphicsDevice.RasterizerState;
             graphicsDevice.RasterizerState = m_rasterizerState;
 
             foreach ( EffectPass effectPass in m_basicEffect.CurrentTechnique.Passes ) {
@@ -132,6 +133,7 @@ namespace XEngine {
                 graphicsDevice.DrawIndexedPrimitives( PrimitiveType.TriangleList, 0, 0, m_vertices.Count, 0, this.PrimitiveCount );
 
             }
+            graphicsDevice.RasterizerState = prevRasterizerState;
         }
 
         static public GeometricPrimitive Factory( GeometricPrimitiveType type, float size ) {
@@ -141,7 +143,7 @@ namespace XEngine {
                     result = new Cube( size );
                     break;
                 case GeometricPrimitiveType.Sphere:
-                    result = new Sphere( size, 20 );
+                    result = new Sphere( size, 10 );
                     break;
             }
             result.GenerateGeometry();

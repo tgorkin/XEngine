@@ -32,22 +32,51 @@ namespace XEngineTypes {
 
         private Matrix m_world = Matrix.Identity;
 
+        private bool m_isDirty = true;
+
+        private Transform m_parent;
+
+        public Transform() { }
+
+        public Transform( Vector3 position ) {
+                m_position = position;
+        }
+
+        public Transform( Vector3 position, Matrix rotation )
+            : this(position) {
+                m_rotation = rotation;
+        }
+
+        public Transform( Vector3 position, Matrix rotation, Vector3 scale )
+            : this( position, rotation ) {
+                m_scale = scale;
+        }
+
         [ContentSerializer( Optional = true )]
         public Vector3 Position {
             get { return m_position; }
-            set {  m_position = value; }
+            set {  
+                m_position = value;
+                m_isDirty = true;
+            }
         }
 
         [ContentSerializer( Optional = true )]
         public Matrix Rotation {
             get { return m_rotation; }
-            set { m_rotation = value; }
+            set { 
+                m_rotation = value;
+                m_isDirty = true;
+            }
         }
 
         [ContentSerializer( Optional = true )]
         public Vector3 Scale {
             get { return m_scale; }
-            set { m_scale = value; }
+            set { 
+                m_scale = value;
+                m_isDirty = true;
+            }
         }
 
         [ContentSerializerIgnore]
@@ -59,7 +88,12 @@ namespace XEngineTypes {
 
         [ContentSerializerIgnore]
         public Matrix World {
-            get { return m_world; }
+            get {
+                if ( m_isDirty ) {
+                    UpdateWorld( m_parent );
+                }
+                return m_world; 
+            }
         }
 
         public void UpdateWorld(Transform parent) {
@@ -68,6 +102,7 @@ namespace XEngineTypes {
             } else {
                 m_world = Local;
             }
+            m_isDirty = false;
         }
 
         public static Transform CreateFromType( TransformType type, float value ) {
